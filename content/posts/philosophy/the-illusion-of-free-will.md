@@ -9,7 +9,7 @@ tags:
 
 > _Man can do what he wills but he cannot will what he wills._
 >
-> -- Arthur Schopenhauer On The Freedom Of The Will (1839)
+> -- <cite>Arthur Schopenhauer On The Freedom Of The Will (1839)</cite>
 
 What is free will?
 
