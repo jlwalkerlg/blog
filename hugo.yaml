@@ -6,7 +6,6 @@ theme: PaperMod
 disqusShortname: jlw-blog
 
 params:
-  env: production
   description: A blog by Jordan Walker
   keywords: [Software Development, Philosophy]
   author: Jordan Walker
