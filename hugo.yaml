@@ -1,0 +1,28 @@
+baseURL: https://blog.walkerjordan.com/
+languageCode: en-GB
+title: Jordan Walker
+theme: PaperMod
+
+disqusShortname: jlw-blog
+
+params:
+  env: production
+  description: A blog by Jordan Walker
+  keywords: [Software Development, Philosophy]
+  author: Jordan Walker
+
+  defaultTheme: auto # dark, light
+  disableThemeToggle: false
+
+  comments: true
+
+menu:
+  main:
+    - identifier: software-development
+      name: Software Development
+      url: /categories/software-development/
+      weight: 20
+    - identifier: philosophy
+      name: Philosophy
+      url: /categories/philosophy/
+      weight: 10
