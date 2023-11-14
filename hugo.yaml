@@ -1,4 +1,4 @@
-baseURL: https://blog.walkerjordan.com/
+baseURL: https://jlwalkerlg.github.io/
 languageCode: en-GB
 title: Jordan Walker
 theme: PaperMod
@@ -20,7 +20,7 @@ params:
     - name: "LinkedIn"
       url: "https://www.linkedin.com/in/jlwalkerlg/"
     - name: "RSS"
-      url: "/index.xml"
+      url: "https://jlwalkerlg.github.io/blog/index.xml"
 
   comments: true
 
