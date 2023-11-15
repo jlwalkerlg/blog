@@ -5,11 +5,11 @@ Categories:
   - Software Development
 ---
 
-`Task.Delay(TimeSpan duration, CancellationToken cancellationToken)` allows you to asynchronously wait for a certain duration before continuing. Sometimes, however, we want to manually cancel the delay before the duration is up. For example, if we’re using the outbox pattern for distributed messaging processing, we might poll the database with a delay between each read, but if we know a new message has been added to the database, we want to cancel the delay and process it immediately.
+`Task.Delay(TimeSpan duration, CancellationToken cancellationToken)` allows you to asynchronously wait for a certain duration before continuing. Sometimes, however, we want to manually cancel the delay before the duration is up. For example, if we're using the outbox pattern for distributed messaging processing, we might poll the database with a delay between each read, but if we know a new message has been added to the database, we want to cancel the delay and process it immediately.
 
 A nice way of doing this is to use `SemaphoreSlim`. We initialise an instance with an initial count of 0. To simulate the delay, we wait to enter the semaphore for the specified duration, so that once the duration is up we continue processing whether or not we successfully entered. If we never release the semaphore, this effectively acts the same as Task.Delay() and we always wait for the full duration.
 
-When we want to cancel the delay, we simply release the semaphore so that the thread waiting to enter it can do so immediately, and in doing so decrease the semaphore’s `CurrentCount` property back to 0, so that the next time we try to enter it, we’re blocked until the count is increased by another call to release the semaphore.
+When we want to cancel the delay, we simply release the semaphore so that the thread waiting to enter it can do so immediately, and in doing so decrease the semaphore's `CurrentCount` property back to 0, so that the next time we try to enter it, we're blocked until the count is increased by another call to release the semaphore.
 
 Note that the semaphore might be released more times than it is entered, and so the current count might increase above 1. This would nullify the delay since the semaphore could be entered immediately the next time it is awaited. To prevent this, we limit the count to 1 and sink any `SemaphoreFullException` thrown when we release the semaphore.
 

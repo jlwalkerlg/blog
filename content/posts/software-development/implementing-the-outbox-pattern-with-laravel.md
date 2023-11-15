@@ -66,7 +66,7 @@ class EventServiceProvider extends ServiceProvider
 
 The problem here is that, if an exception is throw in send the confirmation email, a new user will have been inserted into the database but the email will never be sent. Other scenarios might have more severe consequences, such as failing to collect payment or dispatch a product after a user places an order.
 
-Ideally, we’d like both operations — inserting a new user into the database and sending the email — to be atomic, so that they either both succeed, or both fail. However, since the database and the email service run in different processes, they can’t share a transaction and we can’t guarantee atomicity, even if go through the trouble of implementing two-phase commits.
+Ideally, we'd like both operations — inserting a new user into the database and sending the email — to be atomic, so that they either both succeed, or both fail. However, since the database and the email service run in different processes, they can't share a transaction and we can't guarantee atomicity, even if go through the trouble of implementing two-phase commits.
 
 What we can do, however, is insert the event into the database along with the user in a single database transaction, and dispatch the event in a background process. This way, if the email fails to send for whatever reason, at least the event is not lost and can be retried later either manually or through some automatic retry mechanism.
 

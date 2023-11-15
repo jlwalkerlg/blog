@@ -18,7 +18,7 @@ catch (Exception ex)
 }
 ```
 
-In some cases the exception thrown is completely expected, such as an `OperationCancelledException`. In this case, it’s not really an error, and so logging it as such only clutters and obscures your logs. This can be solved by ignoring the exceptions you expect to be thrown in certain circumstances:
+In some cases the exception thrown is completely expected, such as an `OperationCancelledException`. In this case, it's not really an error, and so logging it as such only clutters and obscures your logs. This can be solved by ignoring the exceptions you expect to be thrown in certain circumstances:
 
 ```csharp
 try

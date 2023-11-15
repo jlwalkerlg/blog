@@ -9,7 +9,7 @@ tags:
 
 ## Problem
 
-Imagine a scenario within e-commerce where an order can be either accepted by an admin or cancelled by the user who submitted the order. If the order has already been accepted, it can’t be cancelled; if it has already been cancelled, it can’t be accepted.
+Imagine a scenario within e-commerce where an order can be either accepted by an admin or cancelled by the user who submitted the order. If the order has already been accepted, it can't be cancelled; if it has already been cancelled, it can't be accepted.
 
 If user tries to cancel the order at the same time as the admin tries to accept it, there should be some mechanism that prevents them from doing so.
 
@@ -64,7 +64,7 @@ await customerContext.SaveChangesAsync();
 1. Admin accepts the order and saves the changes to the database.
 1. User cancel the order and saves the changes to the database.
 
-Since the user had already loaded the order into memory before the admin saved their changes to the database, the status of the order for the user was still "Ordered", and so they were able to cancel it without issue, even though the admin’s changes were eventually saved to the database before the user’s were.
+Since the user had already loaded the order into memory before the admin saved their changes to the database, the status of the order for the user was still "Ordered", and so they were able to cancel it without issue, even though the admin's changes were eventually saved to the database before the user's were.
 
 ## Solution
 
@@ -74,7 +74,7 @@ A concurrency token is a property on your entity. When EF Core updates an entity
 
 If we want to guard against concurrency issues on every update to an entity (i.e. the entity can only be updated by one user at a time), then a simple way to enforce this is to use a property that is automatically updated on every write as the concurrency token.
 
-EF Core makes this simple. First, let’s update our `Order` model to include a `RowVersion` property that will be updated automatically.
+EF Core makes this simple. First, let's update our `Order` model to include a `RowVersion` property that will be updated automatically.
 
 ```csharp
 public class Order

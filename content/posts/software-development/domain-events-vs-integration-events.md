@@ -18,27 +18,27 @@ The primary purpose of domain events is to decouple side effects from the main b
 
 For example, if a customer should receive an email after they place an order, then the domain layer can raise a domain event which the application layer handles by sending the email.
 
-The important thing about domain events is that they’re raised by the domain layer, so they only make sense within the particular bounded context in which they were raised. Furthermore, they use the domain language specific to that bounded context and contain the domain objects of that bounded context.
+The important thing about domain events is that they're raised by the domain layer, so they only make sense within the particular bounded context in which they were raised. Furthermore, they use the domain language specific to that bounded context and contain the domain objects of that bounded context.
 
-Because they only make sense within a particular bounded context, they never leave that bounded context. In fact, domain events are usually processed in memory by the application layer within the same request as the main business logic; they don’t get published to an out-of-process message bus or the like.
+Because they only make sense within a particular bounded context, they never leave that bounded context. In fact, domain events are usually processed in memory by the application layer within the same request as the main business logic; they don't get published to an out-of-process message bus or the like.
 
-As such, there isn’t always a need for domain events; they introduce indirection that is not always necessary. Instead, the application service (use case) can just perform the side effect there and then, before committing the unit of work. However, moving this side effect logic into a domain event handler can be worthwhile if, for example, there are multiple side effects to the same domain operation; if the same domain event is raised by more than one use case; or if the side effect is truly tangential to the domain operation such that it seems cleaner to move the logic elsewhere. In both cases, it’s the application layer that actually executes the side effect.
+As such, there isn't always a need for domain events; they introduce indirection that is not always necessary. Instead, the application service (use case) can just perform the side effect there and then, before committing the unit of work. However, moving this side effect logic into a domain event handler can be worthwhile if, for example, there are multiple side effects to the same domain operation; if the same domain event is raised by more than one use case; or if the side effect is truly tangential to the domain operation such that it seems cleaner to move the logic elsewhere. In both cases, it's the application layer that actually executes the side effect.
 
 # Integration events
 
 The primary purpose of integration events is to inform other applications or bounded contexts that an event occured within this application.
 
-Contrary to domain events, integration events are raised by the application layer to communicate with other applications through an inter-process message bus. As such, they don’t use the domain objects specific to the bounded context in which they are raised, because those domain objects do not necessarily have the same meaning in other bounded contexts.
+Contrary to domain events, integration events are raised by the application layer to communicate with other applications through an inter-process message bus. As such, they don't use the domain objects specific to the bounded context in which they are raised, because those domain objects do not necessarily have the same meaning in other bounded contexts.
 
 # Side effects and the outbox pattern
 
-Since integration events are specifically for communicating with other applications, it’s a misuse of integration events for an application to handle its own integration events.
+Since integration events are specifically for communicating with other applications, it's a misuse of integration events for an application to handle its own integration events.
 
-Nevertheless, it’s not uncommon to see developers doing this. The primary reason is usually so that they can use the outbox pattern to perform side effects reliably. For example, if they want to send an email to a user after they place an order, they’ll publish an OrderPlaced integration event using the outbox pattern and handle it within the same application to send an email.
+Nevertheless, it's not uncommon to see developers doing this. The primary reason is usually so that they can use the outbox pattern to perform side effects reliably. For example, if they want to send an email to a user after they place an order, they'll publish an OrderPlaced integration event using the outbox pattern and handle it within the same application to send an email.
 
-What’s needed here, however, is a domain event. Domain events are designed to be handled within the same application. But if domain events aren’t supposed to leave their bounded context or be published to a message bus, how can we use them with the outbox pattern?
+What's needed here, however, is a domain event. Domain events are designed to be handled within the same application. But if domain events aren't supposed to leave their bounded context or be published to a message bus, how can we use them with the outbox pattern?
 
-First, the outbox pattern is designed to reliably publish integration events to a message bus. Since this is not what we want, we can’t use the outbox pattern. But we can use a similar concept.
+First, the outbox pattern is designed to reliably publish integration events to a message bus. Since this is not what we want, we can't use the outbox pattern. But we can use a similar concept.
 
 What we really want to do is perform some task, or background job, within the same application. Using a similar idea to the outbox pattern, the application layer can handle the domain event by creating one or more background jobs and storing them in the database using the unit of work. Then, a background service can run periodically and execute these jobs by dispatching them to different handlers within the same application.
 
@@ -114,6 +114,6 @@ public interface IUnitOfWork
 }
 ```
 
-This approach also works, and doesn’t leak responsibility like the first approach, but introduces some extra complexity and indirection that might not be warranted.
+This approach also works, and doesn't leak responsibility like the first approach, but introduces some extra complexity and indirection that might not be warranted.
 
 In the end, the best approach is a matter of personal preference: the first is simpler but less coherent in terms of responsibility, while the second is more complex but also more coherent in those terms.
