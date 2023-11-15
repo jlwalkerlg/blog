@@ -1,7 +1,7 @@
 ---
 title: "Manually Cancelling Async Delays in .NET Core"
 date: "2021-10-05T20:27:00Z"
-Categories:
+categories:
   - Software Development
 ---
 

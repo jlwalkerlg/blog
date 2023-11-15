@@ -1,7 +1,7 @@
 ---
 title: "Best Practices for Exceptions"
 date: "2021-10-03T08:18:00Z"
-Categories:
+categories:
   - Software Development
 ---
 

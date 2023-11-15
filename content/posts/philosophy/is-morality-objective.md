@@ -1,9 +1,9 @@
 ---
 title: "Is Morality Objective?"
 date: "2021-06-07T13:06:00Z"
-Categories:
+categories:
   - Philosophy
-Tags:
+tags:
   - morality
 ---
 
