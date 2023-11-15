@@ -20,7 +20,7 @@ In fact, there can be very little, if any, business logic anywhere in the system
 
 For example, the graphic below shows a CRUD-based interface for deactivating an inventory item, wherein the user is presented with all the data that makes up the given inventory item. To deactivate it, they must manually change the "Status" to the appropriate option, remembering to provide a "Deactivation Comment."
 
-![Inventory Item CRUD interface](/images/inventory-item-crud-interface.png)
+![Inventory Item CRUD interface]({{% siteurl "/images/inventory-item-crud-interface.png" %}})
 
 This makes for a poor and confusing user experience. Firstly, far more data presented is than is needed for this use case, and so the interface is unnecessarily over-complicated. Secondly, the user must remember, or figure out, the steps required in order to achieve what they are trying to do — remembering to provide a comment when switching the status to "Deactivated", but not otherwise. Thirdly, the same screen is used for multiple tasks, including deactivating an item, increasing its stock, updating its name and description, and so on. As such, the intent of the user is completely lost.
 
@@ -110,7 +110,7 @@ In contrast, a task-based user interface focuses more on behaviour by breaking d
 
 As before, the user navigates to a screen to edit the customer, the client requests a DTO from the application, and displays it on the screen. However, instead of the user being presented with an interface to directly manipulate the DTO, they are shown a screen that presents them with the options for accomplishing any business-related tasks they might want to perform for the given customer.
 
-![Deactivate Inventory Item task-based interaface](/images/deactivate-inventory-item-task-based-interface.png)
+![Deactivate Inventory Item task-based interaface]({{% siteurl "/images/deactivate-inventory-item-task-based-interface.png" %}})
 
 To accomplish these tasks, instead of sending the new, modified state of the customer as a DTO to the application server, _the client sends commands telling the application to **do something**_, such as "complete a sale", "approve a purchase order", or "submit a loan application". The commands contain the data required to accomplish these tasks, and can be thought of as _**serialisable method calls** on the domain_, which describe the intent of the user far better than generic data-oriented operations.
 

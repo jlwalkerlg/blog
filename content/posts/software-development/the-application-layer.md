@@ -39,7 +39,7 @@ The main difference is that Hexagonal Architecture doesn't actually define _laye
 
 On the other hand, The Clean Architecture goes slightly further in suggesting that the inner hexagon should be made up of 2 layers: the application layer, and the domain layer. The application layer defines the ports for communication with infrastructure, and actually implements the use cases by deferring to the domain layer, which is designed with DDD in mind.
 
-![The Clean Architecture hexagon](/images/the-clean-architecture-hexagon.png)
+![The Clean Architecture hexagon]({{% siteurl "/images/the-clean-architecture-hexagon.png" %}})
 
 ## Application Business Rules vs Enterprise Business Rules
 
