@@ -2,7 +2,7 @@
 title: "The Clean Architecture"
 date: "2020-08-31T11:04:00Z"
 categories:
-  - software development
+  - Software Development
 tags:
   - software architecture
   - the clean architecture
@@ -58,7 +58,7 @@ It is instructive at this point to see how a typical web request will play out, 
 
 Below is an example of a typical web controller, which extends the base controller provided by the framework (in this case ASP.NET Core), and accepts its dependencies via the constructor. These dependencies are injected at run-time by the framework. The controller packs the input from the incoming HTTP request into a simple DTO, passes it to the appropriate `Interactor`, then passes the application response to a `Presenter` to turn it into a format appropriate for the web.
 
-```cs
+```csharp
 public class TodoController : ControllerBase
 {
     private readonly ICompleteTodoUseCase interactor;
@@ -87,7 +87,7 @@ Note that the controller _could_ format the response itself, and the dependency 
 
 After the `Controller` has passed control to the `Interactor` in the application layer, the `Interactor` loads the appropriate domain entity from the appropriate repository, saves the changes, and returns a simple `Result` object. This object is meant simply as a acknowledgement of whether or not the request was successful, and may contain an error in the case of a failure. In this case then, only metadata about the status of the request is returned, since this particular application follows [CQRS]({{% siteurl "/posts/software-development/cqrs" %}}) principles, but it is equally acceptable to return data from the `Interactor`, so long as the data is a simple data structure and is not tied to a particular delivery mechanism.
 
-```cs
+```csharp
 public class CompleteTodoCommand
 {
     public CompleteTodoCommand(Guid id)
