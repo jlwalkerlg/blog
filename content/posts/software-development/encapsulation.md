@@ -8,7 +8,7 @@ tags:
   - object oriented programming
 ---
 
-Encapsulation is one of the four pillars of object-oriented programming, along with abstraction, inheritance and polymorphism. The idea is to restrict access to an object’s internal state through the use of access modifiers, and only allow access through public-facing methods. By doing so, we are able to enforce certain rules as to how the state of our objects can be manipulated, while also keeping our code DRY.
+Encapsulation is one of the four pillars of object-oriented programming, along with abstraction, inheritance and polymorphism. The idea is to restrict access to an object's internal state through the use of access modifiers, and only allow access through public-facing methods. By doing so, we are able to enforce certain rules as to how the state of our objects can be manipulated, while also keeping our code DRY.
 
 Assume we are writing an application for managing university students, as well as their enrolled courses, grades, and so on. We may model this with a Student class and a list of `Course` objects.
 
@@ -19,15 +19,15 @@ public class Student
 }
 ```
 
-To enrol a student in a course, we would add the relevant course to the student’s list of courses.
+To enrol a student in a course, we would add the relevant course to the student's list of courses.
 
 ```csharp
 student.Courses.Add(course);
 ```
 
-Now let’s imagine we have a requirement which states that students must not enrol in more than 5 courses. Further, each course is worth a certain number of credits, and each student is only allowed up to 40 credits from their enrolled courses.
+Now let's imagine we have a requirement which states that students must not enrol in more than 5 courses. Further, each course is worth a certain number of credits, and each student is only allowed up to 40 credits from their enrolled courses.
 
-In DDD, these rules are known as **invariants**. The business (in this case a university) has rules regarding a student’s enrolments, and so we should enforce these in our code.
+In DDD, these rules are known as **invariants**. The business (in this case a university) has rules regarding a student's enrolments, and so we should enforce these in our code.
 
 Before enrolling the student in a course, we therefore need to perform the necessary checks.
 
@@ -45,7 +45,7 @@ if (student.Courses.Sum(x => x.Credits) > 40)
 student.Courses.Add(course);
 ```
 
-While this works, the problem is that the logic required to enrol a student in a course is separate from the data it acts upon, and so the internal state of `Student` is necessarily public. As such, there is no way to guarantee that all operations on the `Student` leave the data in a consistent and valid state: it’s relatively easy for a developer to forget to enforce these checks when developing a new feature, for example, thereby introducing a bug elsewhere in the application by violating the `Student`‘s invariants. Good programming is about reducing the surface area for bugs to occur, and so we should want to make it hard or impossible to make such mistakes.
+While this works, the problem is that the logic required to enrol a student in a course is separate from the data it acts upon, and so the internal state of `Student` is necessarily public. As such, there is no way to guarantee that all operations on the `Student` leave the data in a consistent and valid state: it's relatively easy for a developer to forget to enforce these checks when developing a new feature, for example, thereby introducing a bug elsewhere in the application by violating the `Student`‘s invariants. Good programming is about reducing the surface area for bugs to occur, and so we should want to make it hard or impossible to make such mistakes.
 
 We can do so by hiding the `Student`‘s internal state and moving the logic into the `Student` class itself.
 

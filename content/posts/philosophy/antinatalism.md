@@ -13,7 +13,7 @@ Antinatalism is the idea that is it morally wrong to bring new sentient life int
 
 One of the main proponents of this view is David Benatar, author of _Better Never to Have Been: The Harm of Coming into Existence_.
 
-Benatar suggests that there is a fundamental asymmetry between existence and non-existence insofar as they relate to the goodness or badness of pain and pleasure. Specifically, he suggests that it is good that non-existent beings don’t experience pain, but it is not bad that they don’t experience pleasure. As such, there is only virtue in non-existence, and so it’s better not to create conscious beings.
+Benatar suggests that there is a fundamental asymmetry between existence and non-existence insofar as they relate to the goodness or badness of pain and pleasure. Specifically, he suggests that it is good that non-existent beings don't experience pain, but it is not bad that they don't experience pleasure. As such, there is only virtue in non-existence, and so it's better not to create conscious beings.
 
 However, the obvious fallacy here is that in the case of non-existence, neither badness _nor_ goodness accrue to anyone, since there is no one around for them to accrue to.
 
@@ -23,4 +23,4 @@ In order to be consistent, we should keep the same viewpoint and notice that as 
 
 On the other hand, both pleasure and pain can only accrue to a sentient being who can experience them, and therefore already exists.
 
-As such, whether or not it is “better never to have been” depends fully upon the actual experience of the individual, and therefore whether or not they deem it so. Life is thus an opportunity to make it worth the trouble.
+As such, whether or not it is "better never to have been" depends fully upon the actual experience of the individual, and therefore whether or not they deem it so. Life is thus an opportunity to make it worth the trouble.
