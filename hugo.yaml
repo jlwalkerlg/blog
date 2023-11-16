@@ -35,11 +35,11 @@ enableEmoji: true
 
 menu:
   main:
-    - identifier: software-development
-      name: Software Development
-      url: /categories/software-development/
-      weight: 20
     - identifier: philosophy
       name: Philosophy
       url: /categories/philosophy/
       weight: 10
+    - identifier: software-development
+      name: Software Development
+      url: /categories/software-development/
+      weight: 20
