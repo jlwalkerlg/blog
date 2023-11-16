@@ -26,15 +26,26 @@ tags:
 
 ### Throw exceptions
 
-Throw exception from domain layer
+Throw exception from the domain layer
 
 ```csharp
 Subscription subscription = _subscriptionService.Subscribe(user, product);
 ```
 
+Pros:
+
+- Can be left to bubble up without requiring an `if` statement in every layer
+
+Cons:
+
+- Performance
+- Handling them rather than letting them bubble up requires messy `try/catch` blocks
+
 ### Try execute pattern
 
-Return `Result` objects from domain layer
+<!-- TODO: in a separate post, show how this would work elegantly for a web request -->
+
+Return `Result` objects from the domain layer
 
 ```csharp
 Result<Subscription> result = _subscriptionService.Subscribe(user, product);
@@ -57,6 +68,8 @@ Cons:
 
 ### Can execute pattern
 
+Return error objects from separate `Can___` methods in the domain layer, otherwise fall back to exceptions.
+
 ```csharp
 var error = _subscriptionService.CanExecute(user, product);
 
@@ -78,14 +91,3 @@ Cons:
 
 - Every layer has to handle the `Error` objects explicitly (they don't bubble up like exceptions)
 - Code is duplicated because the domain layer still has to enforce the business rules and therefore run the same checks
-
-### Exceptions
-
-Pros:
-
-- Can be left to bubble up without requiring an `if` statement in every layer
-
-Cons:
-
-- Performance
-- Handling them requires messy `try/catch` blocks
