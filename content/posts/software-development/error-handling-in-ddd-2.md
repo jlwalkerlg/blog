@@ -91,3 +91,10 @@ Cons:
 
 - Every layer has to handle the `Error` objects explicitly (they don't bubble up like exceptions)
 - Code is duplicated because the domain layer still has to enforce the business rules and therefore run the same checks
+
+## How not to raise errors
+
+1. Pull business logic up into application layer
+1. Return error messages from domain layer (can execute pattern) -- can't include context from application layer
+1. Return error codes from domain layer (can execute pattern) -- can't include complementary values to generate the error messages
+1. Return error messages/codes/objects from domain layer (try execute pattern) -- can't return an actual value
