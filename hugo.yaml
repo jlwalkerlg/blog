@@ -20,7 +20,7 @@ params:
     - name: "LinkedIn"
       url: "https://www.linkedin.com/in/jlwalkerlg/"
     - name: "RSS"
-      url: "https://jlwalkerlg.github.io/blog/index.xml"
+      url: "index.xml"
 
   comments: true
 
