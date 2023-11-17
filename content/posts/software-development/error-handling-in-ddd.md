@@ -9,13 +9,13 @@ tags:
   - the clean architecture
 ---
 
-Deciding where and how to handle errors in DDD is tricky because it involves two conflicting concerns: user experience and encapsulation of domain knowledge.
+Deciding where and how to handle errors in DDD is tricky because it involves two conflicting concerns: encapsulation of domain knowledge and user experience.
 
 ## The problem
 
 Following DDD principles, we want to encapsulate all of our core business rules in the domain model as much as possible. At the same time, we want to provide a good user experience, which means providing helpful error messages when something goes wrong. We may also want to map some of these error messages back to particular fields in the user's request.
 
-The problem is that the most helpful error messages are contextual. But as we push our business logic down into the domain layer, we lose sight of the user's original context, which makes it harder to generate contextual error messages. Furthermore, the domain layer doesn't have access to the user's request, and so it can't map error messages back to specific fields therein.
+The problem is that the most helpful error messages are contextual, but as we push our business logic down into the domain layer, we lose sight of the user's original context. This makes it harder to generate contextual error messages, and since the domain layer doesn't have access to the user's original request, it can't map error messages back to specific fields therein.
 
 Conversely, the application layer handles the user's request directly and so has full sight of the user's context. Therefore, it can generate contextual error messages and map them back to specific fields in the user's request (if necessary).
 
