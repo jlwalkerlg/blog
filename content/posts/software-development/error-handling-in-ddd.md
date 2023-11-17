@@ -21,7 +21,7 @@ Conversely, the application layer _does_ handle the user's request directly and 
 
 It can be tempting therefore to lift some of the business logic from the domain layer up into the application layer. However, this leaks domain knowledge out of the domain layer and leads to code duplication because the domain layer will still want to run this logic itself anyway so that it can enforce the business rules itself.
 
-So, how can we keep the business logic in the domain layer while having the application layer handle the error messages?
+So, how can we keep the business logic in the domain layer while having the application layer handle generating and mapping the error messages?
 
 ## Domain exceptions
 
