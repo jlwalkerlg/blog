@@ -1,7 +1,7 @@
 ---
 title: "Error Handling in DDD 2"
 date: "2023-11-16T17:48:32Z"
-draft: true
+draft: false
 categories:
   - Software Development
 tags:
