@@ -30,7 +30,7 @@ One approach is to have the domain layer throw specific domain exceptions that t
 These domain exceptions can also contain default error messages such that if, the application layer doesn't need to translate them into something more contextual, it can present the messages to the user as-is.
 
 ```csharp
-public class BookAppointmentController
+public class AppointmentController
 {
     public async Task<IActionResult> BookAppointment(BookAppointmentRequest request)
     {
