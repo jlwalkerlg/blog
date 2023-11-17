@@ -1,7 +1,6 @@
 ---
 title: "Error Handling in DDD"
-date: "2023-11-16T16:27:53Z"
-draft: false
+date: "2023-11-17T14:14:01Z"
 categories:
   - Software Development
 tags:
@@ -10,88 +9,284 @@ tags:
   - the clean architecture
 ---
 
-Keeping business logic in the domain layer while maintaining a good user experience can be challenging. That's because good user experience requires helpful error messages, but the most helpful error messages are contextual -- they take into account the user's intent and tell them why they can't do exactly what they tried to do.
+Deciding where and how to handle errors in DDD is tricky because it involves two conflicting concerns: user experience and domain knowledge encapsulation.
 
-In fact, the best user experience is one in which the user can't even perform an action if the action is going to be invalid. The user interface should hide any buttons that when pressed will obviously result in an error. This isn't always possible, though; the user interface can't know if an email address is already taken, so the backend has to handle that validation. In any case, the user interface is untrusted and so the back end has to run its own validations anyway.
+## The problem
 
-The problem is that as we push our business logic down into the domain layer, we lose sight of the user's original context. With [task-based interfaces]({{% siteurl "/posts/software-development/cqrs/#task-based-user-interfaces" %}}), the user's request at least carries the user's intent, but this is handled by the application layer rather than the domain layer, so isn't available to domain-level business rules. Furthermore, it's impossible for the domain layer itself to map error messages back to specific fields in the user's request, and consequently to specific form fields in the user interface.
+Following DDD principles, we want to encapsulate all of our core business rules in the domain model as much as possible, but at the same time, we want to provide a good user experience, which means providing error messages that are as helpful as possible to the user when something goes wrong. We often also want to map some error messages back to particular fields in the user's request.
 
-## Approach 1: pull the business logic up into the application layer
+The problem is that the most helpful error messages are contextual: they know exactly what the user is trying to do and they explain exactly why they can't do it within the context of their request. But as we push our business logic down into the domain layer, we lose sight of the user’s original context and so it becomes harder to generate contextual error messages. Furthermore, the domain layer doesn't have access to the user's request, and so can't map error messages back to specific fields therein.
 
-The first approach is to have the application layer implement the business rules/validations itself. This way, we have full sight of the user's request, and therefore the user's intent, so we can provide as much contextual information as possible in our error messages and and also map them back to specific fields in the user's request.
+Conversely, the application layer handles the user's request directly and therefore has full sight of the user's context, so it can generate the most contextual error messages and map them back to specific fields in the request (if necessary).
 
-```csharp
+As such, it can be tempting to lift some of the business logic from the domain layer up into the application layer. However, this leaks domain knowledge out of the domain layer and leads to code duplication, because the domain layer will still want to run this logic to enforce the business rules itself anyway.
 
-```
+So, how can we keep the business logic in the domain layer while having the application layer handle the error messages?
 
-The problem with this approach is that it leaks domain knowledge into the application layer, fragments the business logic, and leads to business logic duplication because the domain layer should still enforce the business rules itself anyway.
+## Domain exceptions
 
-## Approach 2: run validations in the domain layer from the application layer
+One approach is for the domain to throw specific exceptions that the application layer can catch and translate into user-friendly error messages, and map them to fields in the user's request (if necessary). The subtype of the exception and the data contained therein fully describe the error to the application layer, which can therefore translate it accordingly.
 
-The next best thing is to keep the business logic in the domain layer but have the application layer ask the domain layer if it can perform an operation before it actually tries to do so. The domain layer returns an error message if the operation is invalid, which the application layer passes back to the user interface.
-
-```csharp
-
-```
-
-If the application layer skips the validation checks, the domain layer still enforces the rules itself and throws an exception if they're broken.
+As with the error objects described above, these exceptions can contain a default error message generated by the domain layer, such that if the application layer doesn't need to translate the error into something more contextual, it can present the message to the user as-is.
 
 ```csharp
+public class BookAppointmentController
+{
+    public async Task<IActionResult> BookAppointment(BookAppointmentRequest request)
+    {
+        await _mediator.Send(request);
 
+        return Ok();
+    }
+}
+
+public class BookAppointmentHandler : IRequestHandler<BookAppointmentCommand, Guid>
+{
+    public async Task<Guid> BookAppointment(BookAppointmentCommand command, CancellationToken cancellationToken)
+    {
+        var calendar = await _repository.GetCalendarById(command.CalendarId, cancellationToken);
+
+        if (calendar is null)
+        {
+            throw new NotFoundException("Calendar not found.");
+        }
+
+        Appointment appointment;
+
+        try
+        {
+            appointment = calendar.BookAppointment(command.Time);
+        }
+        catch (ScheduleFullException e)
+        {
+            throw e.WithMessage("There's no availability for the time you've requested the appointment. Please try another time.");
+        }
+
+        await _repository.SaveChanges();
+
+        return appointment.Id;
+    }
+}
+
+public class Calendar
+{
+    public Appointment BookAppointment(DateTimeOffset time)
+    {
+        if (!IsActive)
+        {
+            throw new CalendarNotActiveException(this);
+        }
+
+        if (!HasAvailability(time))
+        {
+            throw new ScheduleFullException(this, time);
+        }
+
+        var appointment = Appointment.Create(this, time);
+        return appointment;
+    }
+}
 ```
 
-The problem with this approach is that we're back to where we started: the domain layer is generating the error messages rather than the application layer, so they're not as contextual as they could be. In order for the error messages to be as contextual as possible, we need to generate the error messages in the application layer.
+Advantages:
 
-## Approach 3: return error codes from the domain layer
+1. Cleaner overall.
+1. Unlike `Result` objects, exceptions bubble up the call stack and so don't need to be handled by each layer explicitly if not necessary, for example if they don't need to be translated into more contextual error messages than the default message generated by the domain.
+1. Because they bubble up, they can be logged by some global exception handler more easily.
 
-Instead of returning an error message, the domain layer can return a unique error code instead, and let the application layer decide how it wants to display that error to the user.
+Disadvantages:
+
+1. Performance.
+
+## The result pattern
+
+An alternative approach is to have the domain layer return `Result` objects for each operation. If the operation results in an error, then the `Result` object contains a some kind of error _object_ that the application layer can translate into a user-friendly error message, and map it back to a field in the user's request (if necessary). The subtype of the error object and the data contained therein fully describe the error to the application layer, which can therefore translate it accordingly.
+
+As with exceptions, these error objects can contain a default error message generated by the domain layer, such that if the application layer doesn't need to translate the error into something more contextual, it can present the message to the user as-is.
 
 ```csharp
+public class BookAppointmentController
+{
+    public async Task<IActionResult> BookAppointment(BookAppointmentRequest request)
+    {
+        var result = await _mediator.Send(request);
 
+        if (!result)
+        {
+            return result.ToApiResponse();
+        }
+
+        return Ok();
+    }
+}
+
+public class BookAppointmentHandler : IRequestHandler<BookAppointmentCommand, Result<Guid>>
+{
+    public async Task<Result<Guid>> BookAppointment(BookAppointmentCommand command, CancellationToken cancellationToken)
+    {
+        var calendar = await _repository.GetCalendarById(command.CalendarId, cancellationToken);
+
+        if (calendar is null)
+        {
+            return Errors.NotFound("Calendar not found.");
+        }
+
+        var appointmentResult = calendar.BookAppointment(command.Time);
+
+        if (!appointmentResult)
+        {
+            if (appointmentResult.Error is AppointmentErrors.ScheduleFull)
+            {
+                return appointmentResult.Error.WithMessage("There's no availability for the time you've requested the appointment. Please try another time.");
+            }
+            else
+            {
+                return appointmentResult;
+            }
+        }
+
+        await _repository.SaveChanges();
+
+        var appointment = appointmentResult.Value;
+        return Result.Success(appointment.Id);
+    }
+}
+
+public class Calendar
+{
+    public Result<Appointment> BookAppointment(DateTimeOffset time)
+    {
+        if (!IsActive)
+        {
+            return AppointmentErrors.CalendarNotActive(this);
+        }
+
+        if (!HasAvailability(time))
+        {
+            return AppointmentErrors.ScheduleFull(this, time);
+        }
+
+        var appointment = Appointment.Create(this, time);
+        return Result.Success(appointment);
+    }
+}
 ```
 
-The problem with this approach is that there's no way for the domain layer to pass any complementary data back to the application layer with the error code that would help to present a helpful error message.
+Advantages:
 
-## Approach 4: return error objects from the domain layer
+1. It doesn't come with the performance penalty that using exceptions does.
 
-Instead of returning strings, the domain layer can instead return error objects that include all necessary details about the error to the application layer so that it can generate a helpful error message. Since these objects are strongly-typed, there's no need for them to contain error codes unless they're useful to the client (e.g., the user interface).
+Disadvantages:
 
-The domain layer can also provide an error message that can serve as a default if the application layer doesn't need to translate the error into something more contextual.
+1. Unlike exceptions, `Result` objects don't bubble up the call stack and so have to be handled by each layer explicitly. _Some actually see this more explicit control-flow as a benefit._
+
+## The can execute pattern
+
+A similar approach to the result pattern is to ask the domain layer if it can perform an operation before trying to do so. If not, the domain layer returns an error object, as in the result pattern.
+
+This approach works but leads to code duplication because the same business logic is run twice: once when the application layer validates the operation, and again when it executes it.
 
 ```csharp
+public class BookAppointmentController
+{
+    public async Task<IActionResult> BookAppointment(BookAppointmentRequest request)
+    {
+        var result = await _mediator.Send(request);
 
+        if (!result)
+        {
+            return result.ToApiResponse();
+        }
+
+        return Ok();
+    }
+}
+
+public class BookAppointmentHandler : IRequestHandler<BookAppointmentCommand, Result<Guid>>
+{
+    public async Task<Result<Guid>> BookAppointment(BookAppointmentCommand command, CancellationToken cancellationToken)
+    {
+        var calendar = await _repository.GetCalendarById(command.CalendarId, cancellationToken);
+
+        if (calendar is null)
+        {
+            return Errors.NotFound("Calendar not found.");
+        }
+
+        var appointmentError = calendar.CanBookAppointment(command.Time);
+
+        if (appointmentError is not null)
+        {
+            if (appointmentError is AppointmentErrors.ScheduleFull)
+            {
+                return appointmentError.WithMessage("There's no availability for the time you've requested the appointment. Please try another time.");
+            }
+            else
+            {
+                return appointmentError;
+            }
+        }
+
+        var appointment = calendar.BookAppointment(command.Time);
+
+        await _repository.SaveChanges();
+
+        return Result.Success(appointment.Id);
+    }
+}
+
+public class Calendar
+{
+    public Error? CanBookAppointment(DateTimeOffset time)
+    {
+        if (!IsActive)
+        {
+            return AppointmentErrors.CalendarNotActive(this);
+        }
+
+        if (!HasAvailability(time))
+        {
+            return AppointmentErrors.ScheduleFull(this, time);
+        }
+
+        return null;
+    }
+
+    public Result<Appointment> BookAppointment(DateTimeOffset time)
+    {
+        var error = CanBookAppointment(time);
+
+        if (error is not null)
+        {
+            throw new InvalidDomainOperationException(error);
+        }
+
+        var appointment = Appointment.Create(this, time);
+        return Result.Success(appointment);
+    }
+}
 ```
 
-The problem with this approach is that it still duplicates some code between the application layer and the domain layer.
+Overall, this approach is similar to but less elegant than the result pattern, so I don't recommend using it.
 
-## Approach 5: return error objects from domain operations themselves
+## Preventing errors in the UI
 
-Instead of exposing separate methods from the domain layer to check if an operation is valid, the domain layer can just return those error objects from the actual domain operation methods.
+One of the concerns that makes error handling in DDD challenging is user experience.
 
-```csharp
+But in fact, the best user experience of all is one in which errors don't even occur: the user is blocked from performing any actions that are bound to lead to an error, either by hiding or disabling the buttons to perform them.
 
-```
+However, this isn't always possible. For example, the UI can't know whether or not a username has already been taken, and so has to leave this validation to the back end.
 
-The problem with this approach is that the domain layer can't return anything besides the error object. If it needs to pass something back to the application layer, it would have to use an `out` parameter.
+When it is possible, though, the UI requires some logic to determine if the action is valid or not. This logic is often business logic and so leads to leakage of domain knowledge into the UI.
 
-## Approach 6: return Result objects or throw exceptions from the domain layer
+As such, the potential improvements to the user experience should be weighed against the impacts of leaking domain knowledge and duplicating business logic into the UI.
 
-Instead of returning an error object, the domain layer can return a result object, which contains either the data in the case of success or an error in the case of a failure.
+One potential way to preserve such user experience while avoiding leaking domain knowledge is for your view models to contain abstract information that tells the UI whether or not a particular action is valid. However, this might be overkill or even impossible in some cases, and so we might decide that a small amount of domain model leakage is acceptable and worthwhile.
 
-```csharp
+## Form request validation
 
-```
+Not all validation logic is inherently business-related. For example, validating that an email address is formatted correctly is not a core business rule; it's more related to the type of format of the data itself. Likewise for validating that a person's weight is not less than 0.
 
-The problem with this approach is that it forces each layer to handle the result object, leading to a lot of `if` statements.
+In such cases, it's better to perform this validation in the UI where we can prevent the user from submitting the form and more easily map the validation message back to the form inputs, making for a better user experience. Failing that, we can do this validation in the application layer rather than in the domain layer, where it's easier to map it back to specific fields in the user's request. This type of validation is not really the responsibility of the domain layer; the domain layer should instead focus on core business rules and therefore expect that user input passed to it has already been validated against badly-formatted and semantically-invalid data.
 
-## Approach 7: throwing exceptions
-
-Instead of returning a result object containing the error in the result of a failure, the domain layer can just throw specific exceptions in the case of an error.
-
-```csharp
-
-```
-
-The problem with this approach is that if the application layer wants to translate the exception into a contextual error message, it has to use a `try/catch` block, which makes your code messy.
-
-The advantage is that the exceptions can bubble up to the top without having to be handled in every layer, as the result objects do.
+If the value of one of the fields in the user's request _is_ related to business rules, then the application layer can use the domain layer to perform the validation, and map any error back to that field. In the UI, we might compromise and duplicate business logic into the UI in order to perform the validation there if the compromise is worthwhile in terms of user experience.
