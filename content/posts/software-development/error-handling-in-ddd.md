@@ -113,7 +113,7 @@ public class AppointmentController
 
         if (!result)
         {
-            return result.ToApiResponse();
+            return result.Error.ToApiResponse();
         }
 
         return Ok();
@@ -183,9 +183,9 @@ Disadvantages:
 
 ## The can execute pattern
 
-A similar approach to the result pattern is to have the application layer ask the domain layer if it can perform an operation before trying to do so. If not, the domain layer returns an error object, as in the result pattern.
+A similar approach to the result pattern is to have the application layer ask the domain layer if it can perform an operation before trying to do so. If it can't, the domain layer returns an error object, as in the result pattern.
 
-This approach works but leads to code duplication because the same business logic is called twice: once by the application layer when it asks the domain layer if the operation is valid, then again by the domain layer when it is actually asked to execute the operation, since the domain model will still want to enforce the business rules itself.
+This approach works but leads to code duplication because the same business logic is called twice: once by the application layer when it asks the domain layer if it can perform the operation, and then again by the domain layer when it actually executed the operation.
 
 ```csharp
 public class AppointmentController
@@ -196,7 +196,7 @@ public class AppointmentController
 
         if (!result)
         {
-            return result.ToApiResponse();
+            return result.Error.ToApiResponse();
         }
 
         return Ok();
@@ -272,22 +272,22 @@ Overall, this approach is similar to but less elegant than the result pattern.
 
 ## Preventing errors in the UI
 
-One of the concerns that makes error handling in DDD challenging is user experience.
+One of the concerns that makes error handling in DDD challenging is providing a good user experience.
 
-But the best user experience is one in which errors don't even occur -- one in which the user is blocked from performing any actions that are bound to lead to an error. This can be achieved either by hiding or disabling the buttons to perform them.
+But the best user experience is one in which errors don't even occur -- one in which the user is blocked from performing any actions that are bound to lead to errors, usually by hiding or disabling the buttons that perform them.
 
 However, this isn't always possible. For example, the UI can't know whether or not a username has already been taken, and so has to leave this validation to the back end.
 
-When it is possible, though, the UI requires some logic to determine if the action is valid or not. This logic is often business logic and so leads to leakage of domain knowledge into the UI.
+When it is possible, though, the UI requires some logic to determine if the action is valid or not. This logic is often involves business rules and so leads to leakage of domain knowledge into the UI.
 
-As such, the potential improvements to the user experience should be weighed against the impacts of leaking domain knowledge and duplicating business logic into the UI.
+As such, the potential gains in user experience should be weighed against the impacts of leaking domain knowledge and duplicating business logic into the UI.
 
-One potential way to preserve such user experience while avoiding leaking domain knowledge is for your view models to contain abstract information that tells the UI whether or not a particular action is valid. However, this might be overkill or even impossible in some cases, and so we might decide that a small amount of domain model leakage is acceptable and worthwhile.
+One way to preserve such user experience while avoiding leaking domain knowledge is for your view models to contain abstract information that tells the UI whether or not a particular action is valid. However, this might be overkill or even impossible in some cases, and so we might decide that a small amount of domain model leakage is acceptable and worthwhile.
 
 ## Form request validation
 
-Not all validation logic is inherently business-related. For example, validating that an email address is formatted correctly is not a core business rule; it's more related to the type of format of the data itself. Likewise for validating that a person's weight is not less than 0.
+Not all validation logic is inherently business-related. For example, validating that an email address is formatted correctly is not a core business rule; it's more related to the type and format of the data itself. Likewise for validating that a person's weight is not less than 0.
 
-In such cases, it's better to perform this validation in the UI where we can prevent the user from submitting the form and more easily map the validation message back to the form inputs, making for a better user experience. Failing that, we can do this validation in the application layer rather than in the domain layer, where it's easier to map it back to specific fields in the user's request. This type of validation is not really the responsibility of the domain layer; the domain layer should instead focus on core business rules and therefore expect that user input passed to it has already been validated against badly-formatted and semantically-invalid data.
+In such cases, it's better to perform this validation in the UI where we can prevent the user from submitting the form and more easily map validation messages back to form inputs, making for a better user experience. Failing that, we can do this validation in the application layer rather than in the domain layer, where it's easier to map it back to specific fields in the user's request. This type of validation is not really the responsibility of the domain layer; the domain layer should instead focus on core business rules and therefore expect that user input passed to it has already been validated against badly-formatted and semantically-invalid data.
 
 If the value of one of the fields in the user's request _is_ related to business rules, then the application layer can use the domain layer to perform the validation, and map any error back to that field. In the UI, we might compromise and duplicate business logic into the UI in order to perform the validation there if the compromise is worthwhile in terms of user experience.
