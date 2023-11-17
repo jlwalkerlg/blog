@@ -27,7 +27,7 @@ So, how can we keep the business logic in the domain layer while having the appl
 
 One approach is to have the domain layer throw specific domain exceptions that the application layer can catch and translate into user-friendly error messages, and map them to specific fields in the user's request (if necessary). The subtype of the exception and the data contained therein fully describe the error, which allows the application layer to translate it accordingly.
 
-These domain exceptions can also contain a default error message generated such that if the application layer doesn't need to translate them into something more contextual, it can present the message to the user as-is.
+These domain exceptions can also contain default error messages such that if, the application layer doesn't need to translate them into something more contextual, it can present the messages to the user as-is.
 
 ```csharp
 public class BookAppointmentController
