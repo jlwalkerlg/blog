@@ -17,9 +17,9 @@ Following DDD principles, we want to encapsulate all of our core business rules 
 
 The problem is that the most helpful error messages are contextual, but as we push our business logic down into the domain layer, we lose sight of the user's original context. This makes it harder to generate contextual error messages, and since the domain layer doesn't have access to the user's original request, it can't map error messages back to specific fields therein.
 
-Conversely, the application layer handles the user's request directly and so has full sight of the user's context. Therefore, it can generate contextual error messages and map them back to specific fields in the user's request (if necessary).
+Conversely, the application layer _does_ handle the user's request directly and therefore has full sight of the user's original context. ThereforeAs such, it can generate contextual error messages and map them back to specific fields in the user's request (if necessary).
 
-As such, it can be tempting to lift some of the business logic from the domain layer up into the application layer. However, this leaks domain knowledge out of the domain layer and leads to code duplication because the domain layer will still want to run this logic itself anyway so it can enforce the business rules itself.
+It can be tempting therefore to lift some of the business logic from the domain layer up into the application layer. However, this leaks domain knowledge out of the domain layer and leads to code duplication because the domain layer will still want to run this logic itself anyway so that it can enforce the business rules itself.
 
 So, how can we keep the business logic in the domain layer while having the application layer handle the error messages?
 
