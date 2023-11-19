@@ -352,3 +352,19 @@ However, this marginally leaks implementation details and doesn't express the do
 ```csharp
 user.AcceptInvitation(invitation);
 ```
+
+# Use sychronous add/remove methods on the unit of work
+
+The point of the unit of work pattern is to track all changes to the domain model in memory, and commit them all in a single database transaction.
+
+Since change tracking happens in memory, there's no need for add/remove operations to be asynchronous.
+
+```csharp
+public interface IUnitOfWork
+{
+    void Add<TEntity>(TEntity entity) where TEntity : Entity;
+    void Remove<TEntity>(TEntity entity) where TEntity : Entity;
+}
+```
+
+Only the read operations need to be asynchronous, since these will most likely load domain entities from the database.
