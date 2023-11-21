@@ -327,6 +327,10 @@ public static class CreateUser
   └─Menu.cs
 ```
 
+## Name the application layer project, `UseCases`
+
+`UseCases` clearly expresses the idea of the layer and avoid the generic, meaningless name, `Application` or `App`.
+
 ## The application layer
 
 The application layer serves basically the same purpose as controllers in a web framework, but is made independent of delivery mechanism by a thin abstraction. That is, it exposes the domain layer and its core business operations to the user via different use cases.
