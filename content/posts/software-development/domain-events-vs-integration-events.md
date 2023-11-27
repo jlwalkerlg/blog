@@ -16,39 +16,49 @@ Though domain events and integration events both events, their purposes are in f
 
 The primary purpose of domain events is to decouple side effects from the main business logic.
 
-For example, if a customer should receive an email after they place an order, then the domain layer can raise a domain event which the application layer handles by sending the email.
+For example, if a customer should receive an email after they place an order, then the domain layer can raise a domain event which the application layer can handle by actually sending the email.
 
-The important thing about domain events is that they're raised by the domain layer, so they only make sense within the particular bounded context in which they were raised. Furthermore, they use the domain language specific to that bounded context and contain the domain objects of that bounded context.
+The important thing about domain events is that they're raised by the domain layer, so they only make sense within the bounded context in which they were raised. Furthermore, they use the domain language and domain objects of that bounded context.
 
-Because they only make sense within a particular bounded context, they never leave that bounded context. In fact, domain events are usually processed in memory by the application layer within the same request as the main business logic; they don't get published to an out-of-process message bus or the like.
+Because they only make sense within a particular bounded context, they never leave it. In fact, domain events are usually processed in memory by the application layer within the same request as the main business logic; they don't get published to an out-of-process message bus to be sent downstream.
 
-As such, there isn't always a need for domain events; they introduce indirection that is not always necessary. Instead, the application service (use case) can just perform the side effect there and then, before committing the unit of work. However, moving this side effect logic into a domain event handler can be worthwhile if, for example, there are multiple side effects to the same domain operation; if the same domain event is raised by more than one use case; or if the side effect is truly tangential to the domain operation such that it seems cleaner to move the logic elsewhere. In both cases, it's the application layer that actually executes the side effect.
+As such, there isn't always a need for domain events; they introduce indirection that isn't always appropriate. Instead, the application layer can just execute the side effect after executing the main business logic.
+
+However, moving side effect logic into a domain event handler can be worthwhile if:
+
+1. there are multiple side effects to the same domain operation
+1. the same domain event is raised in more than one place
+1. the side effect is truly tangential to the main business logic such that it's cleaner to move it somewhere else.
+
+In any case, it's the application layer that actually executes the side effect.
 
 # Integration events
 
-The primary purpose of integration events is to inform other applications or bounded contexts that an event occured within this application.
+The primary purpose of integration events is to inform other applications or bounded contexts that an event has occured within _this_ application.
 
 Contrary to domain events, integration events are raised by the application layer to communicate with other applications through an inter-process message bus. As such, they don't use the domain objects specific to the bounded context in which they are raised, because those domain objects do not necessarily have the same meaning in other bounded contexts.
 
 # Side effects and the outbox pattern
 
-Since integration events are specifically for communicating with other applications, it's a misuse of integration events for an application to handle its own integration events.
+Since integration events are intended for communicating with other applications, it's a misuse of them for an application to handle its own integration events.
 
-Nevertheless, it's not uncommon to see developers doing this. The primary reason is usually so that they can use the outbox pattern to perform side effects reliably. For example, if they want to send an email to a user after they place an order, they'll publish an OrderPlaced integration event using the outbox pattern and handle it within the same application to send an email.
+Nevertheless, it's not uncommon to see developers doing this. The primary reason is usually so that they can use the outbox pattern to perform side effects reliably. For example, if they want to send an email to a user after they place an order, they'll publish an `OrderPlaced` integration event using the outbox pattern and handle it within the same application to send an email.
 
-What's needed here, however, is a domain event. Domain events are designed to be handled within the same application. But if domain events aren't supposed to leave their bounded context or be published to a message bus, how can we use them with the outbox pattern?
+What's needed here, however, is a domain event. Domain events are designed to be handled within the same application.
 
-First, the outbox pattern is designed to reliably publish integration events to a message bus. Since this is not what we want, we can't use the outbox pattern. But we can use a similar concept.
+But if domain events aren't supposed to leave their bounded context or be published to a message bus, how can we use them with the outbox pattern?
 
-What we really want to do is perform some task, or background job, within the same application. Using a similar idea to the outbox pattern, the application layer can handle the domain event by creating one or more background jobs and storing them in the database using the unit of work. Then, a background service can run periodically and execute these jobs by dispatching them to different handlers within the same application.
+First, the outbox pattern is designed to reliably publish _integration events_ to a _message bus_. Since this isn't what we want, we can't use the outbox pattern. But we _can_ use a similar concept.
 
-As an implementation detail, a message bus might be used to dispatch the background jobs to handlers within the same application, but the messages should be scoped to this application (for example, by using naming conventions in the routing keys or in the queue names).
+What we really want to do is perform some background work within the same application. Similar to the outbox pattern, we can have the application layer handle the domain event by creating one or more background jobs and storing them in the database using the unit of work. Then, a background service can periodically execute these jobs by dispatching them to handlers within the same application.
+
+As an implementation detail, a message bus _could_ be used to facilitate all or part of this process, but the messages should be scoped to the publishing application (for example, via routing keys and queue names).
 
 # How to publish domain events
 
 So if domain events are raised by the domain layer, how are they dispatched to handlers in the application layer?
 
-The most common approach when using EF Core seems to be to override the SaveChangesAsync method in the DbContext, and use MediatR to dispatch the events before the changes are saved.
+A common approach when using EF Core is to be to override the `SaveChangesAsync` method on the `DbContext`, and use `MediatR` to dispatch the events before the changes are saved.
 
 ```csharp
 internal class AppDbContext : DbContext
@@ -68,7 +78,7 @@ internal class AppDbContext : DbContext
 }
 ```
 
-The events are exposed as read-only collections by the domain entities so that they can be published.
+The events are exposed by domain entities as read-only collections.
 
 ```csharp
 public abstract class Entity
@@ -84,36 +94,70 @@ public abstract class Entity
 }
 ```
 
-This works well but leaks responsibility: domain events should be dispatched by the application layer, not the infrastructure layer.
+This works well but leaks responsibility: domain events should really be dispatched by the application layer, not the infrastructure layer.
 
-A different approach would be to proxy the unit of work in the application layer, and dispatch the events in the proxy. The proxy could even be transparent to the use case handlers if it is registered as a proxy in the DI container.
+A different approach would be to proxy the unit of work in the application layer, and dispatch the events in the proxy. The proxy could even be transparent to the use case handlers if registered appropriately in the DI container.
+
+```csharp
+public interface IUnitOfWork
+{
+    IEnumerable<IDomainEvent> GetDomainEvents();
+    Task Commit(CancellationToken cancellationToken = default)
+}
+```
 
 ```csharp
 internal class UnitOfWorkProxy : IUnitOfWork
 {
+    private readonly IUnitOfWork _proxied;
+
+    public UnitOfWorkProxy(IUnitOfWork proxied)
+    {
+        _proxied = proxied;
+    }
+
+    public IEnumerable<IDomainEvent> GetDomainEvents()
+    {
+        return _proxied.GetDomainEvents();
+    }
+
     public async Task Commit(CancellationToken cancellationToken = default)
     {
-        var events = _proxy.GetDomainEvents();
+        var events = GetDomainEvents();
 
         foreach (var evt in events)
         {
             await _publisher.Publish(new DomainEventNotification(ev));
         }
 
-        await _proxy.Commit(cancellationToken);
+        await _proxied.Commit(cancellationToken);
     }
 }
 ```
 
-For this to work, the GetDomainEvents method would have to be added to the IUnitOfWork interace, like so.
-
 ```csharp
-public interface IUnitOfWork
+internal class EfCoreUnitOfWork : IUnitOfWork
 {
-    IEnumerable<IDomainEvent> GetDomainEvents();
+    private readonly AppDbContext _context;
+
+    public EfCoreUnitOfWork(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    public IEnumerable<IDomainEvent> GetDomainEvents()
+    {
+        return ChangeTracker.Entries<Entity>()
+            .SelectMany(e => e.Events);
+    }
+
+    public async Task Commit(CancellationToken cancellationToken = default)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }
 ```
 
-This approach also works, and doesn't leak responsibility like the first approach, but introduces some extra complexity and indirection that might not be warranted.
+This approach also works, and doesn't leak responsibility like the first approach does, but introduces some extra complexity and indirection that might not be warranted.
 
-In the end, the best approach is a matter of personal preference: the first is simpler but less coherent in terms of responsibility, while the second is more complex but also more coherent in those terms.
+In the end, the best approach is a matter of personal preference: the first is simpler but leaks responsibility; the second approach is more complex but doesn't leak responsibility.
