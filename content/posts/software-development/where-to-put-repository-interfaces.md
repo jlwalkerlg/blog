@@ -13,11 +13,11 @@ There's often a lot of debate around whether repositories should go in the appli
 
 A good argument for putting them in the domain layer is that this way the domain layer defines how the domain model can be loaded and persisted to and from storage.
 
-But the truth is that interfaces should be defined by the client that actually uses them. This is true of all interfaces in software development, not just repositories in DDD or The Clean Architecture.
+But the truth is that interfaces should be defined by the client that actually uses them. This is true of all interfaces in software development, not just repositories.
 
-As such, if the domain layer needs to access the database (e.g., in a domain service), it will define an interface to do so.
+As such, if the domain layer needs to access the database (e.g., in a domain service), it should define an interface to do so.
 
-But as per the interface segregation principle, this interface shouldn't contain any more methods than are needed by the client, i.e., the domain layer; the application layer should define any interfaces _it_ needs to access the database separately.
+But as per the interface segregation principle, this interface shouldn't contain any more functionality than is needed by the client (the domain layer); the application layer should define any interfaces _it_ needs to access the database separately.
 
 Therefore, both the domain layer and the application layer are likely to contain their own repository interfaces, both of which should be implemented by the infrastructure layer.
 
