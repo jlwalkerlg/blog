@@ -22,50 +22,6 @@ It's possible to put this logic into a method on one of the involved aggregate r
 
 Instead, it's usually better to introduce a domain service to hold this logic and coordinate between the involved aggregates.
 
-## Put repositories in the domain layer
-
-Domain services often need to query across multiple aggregates in the domain model by definition. For example, a business rule might state that each user can only follow up to 100 artists, while another business rule might state that each user's email has to be unique.
-
-This means either that all the relevant aggregates needed to enforce these business rules have to be loaded into memory up front by the application layer and then passed into the domain service, or the domain service has to have direct access to the domain model through a repository.
-
-Loading all the relevant aggregates up front is impractical not only in terms of performance, but also in terms of code organisation, depending on how many collections of aggregate have to be joined together in-memory. Queries across multiple aggregates are often better done by a database.
-
-As such, it's better to give domain services access to the domain model through repositories, which means that repositories must be part of the domain layer.
-
-This makes sense because repositories are defined in terms of the domain model, i.e., they accept domain objects as arguments and return domain objects as return values, just as domain services do.
-
-This is what truly distinguishes them from other services that also reach out to external processes: repositories are concerned wholly with the domain model, and the fact that they reach out to an external process is merely an artifact of practicality — it is necessary for the domain model to be persisted to a database without loading the whole thing into memory on each request. This is not true of other services that interact with external processes, because the only external process that is entirely focused on the domain model is the database, and therefore repositories so should be the only external services in the domain layer.
-
-```csharp
-public class FollowerService
-{
-    private readonly IFollowerRepository _followerRepository;
-
-    public FollowerService(IFollowerRepository followerRepository)
-    {
-        _followerRepository = followerRepository;
-    }
-
-    public async Task FollowArtist(User user, Artist artist)
-    {
-        if (await _followerRepository.IsAlreadyFollowing(user, artist))
-        {
-            throw new Exception("The user is following this artist");
-        }
-
-        if (await _followerRepository.CountFollowing(user) is 100)
-        {
-            throw new Exception("The user is already following the maximum of 100 artists");
-        }
-
-        var follower = Follower.Create(user, artist);
-        await _followerRepository.Add(follower);
-    }
-}
-```
-
-Another benefit of defining the repositories in the domain layer is that it means that the domain layer defines how the domain aggregates can be accessed, i.e., what operations can be done against the domain model as a whole. As such, the application layer has to conform to the constraints of the domain layer, further pushing the core business rules down into the domain layer, which is what we want. This is similar to how an aggregate root controls access to its internal entities, but is effective across the domain model rather than a single aggregate.
-
 ## Use value objects for strong-typed entity IDs
 
 Using value objects instead of primitive types like GUIDs for entity IDs helps to avoid common bugs like those demonstrated below.
