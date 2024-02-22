@@ -14,7 +14,7 @@ Why should I use MediatR to process web requests?
 
 And why should I extract logic out of my controllers?
 
-> _Because it allows your controllers to focus on HTTP requests/responses, and untangles your logic from those concerns._
+> _Because it allows your controllers to focus on HTTP requests/responses, and untangles your core application logic from those concerns._
 
 That sounds a lot like the single responsibility principle.
 
@@ -22,25 +22,25 @@ That sounds a lot like the single responsibility principle.
 
 Ok, keep going...
 
-> _Well, by untying your core application logic from any particular delivery mechanism, it allows the application to be driven any delivery mechanism._
+> _Well, by untying your core application logic from any particular delivery mechanism, it allows the application to be driven by any delivery mechanism._
 
 What's a delivery mechanism?
 
-> _It's the mechanism by which the application receives input and returns output. On the web, that mechanism consists of HTTP requests/responses._
+> _It's the mechanism by which the application receives input and returns output. On the web, that mechanism consists of HTTP requests and responses._
 
 And which other delivery mechanisms might I want to drive my application with?
 
-> _The console, a desktop GUI, a test suite..._
+> _A CLI, a desktop GUI, a test suite..._
 
 A test suite also counts as a delivery mechanism?
 
 > _Of course!_
 
-And by decoupling my core application logic from any particular delivery mechanism, I imagine that I can more easily unit test my core application logic by driving the application with unit tests.
+And by decoupling my core application logic from the delivery mechanism, I imagine that I can more easily unit test my core application logic by driving the application with unit tests.
 
 > _Exactly!_
 
-Ok, ok. But couldn't I achieve the same decoupling by just calling application services directly from my controllers without using the command dispatcher pattern?
+Ok, ok. But couldn't I achieve the same decoupling by just calling application services directly from my controllers, without using the command dispatcher pattern?
 
 > _Yes._
 
@@ -50,7 +50,7 @@ So why do I need the command dispatcher pattern?
 
 Like what?
 
-> _Well, it allows you to more easily implement cross-cutting behaviours using the chain of responsibility pattern._
+> _Well, it allows you to more easily implement cross-cutting concerns using the chain of responsibility pattern._
 
 Like authorisation and exception handling?
 
@@ -74,11 +74,11 @@ So the middleware provided by my web framework is redundant/useless?
 
 Ah, I see. So is there any other reason to use the command dispatcher pattern?
 
-> _Well, it also encourages us to represent our application's use-cases explicitly as strongly-types classes, which is more expressive and makes our application more clearly scream its architecture._
+> _Well, it also encourages us to represent our application's use cases explicitly as strongly-types classes, which is more expressive and makes our application more clearly scream its architecture._
 
 Good point.
 
-> _It also encourages us to have one handler per command, rather than one handler per many commands._
+> _It also encourages us to have one handler per command, rather than one service handling multiple use cases._
 
 Another application of the single responsibility principle.
 
