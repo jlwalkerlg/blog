@@ -287,20 +287,6 @@ public static class CreateUser
   └─Menu.cs
 ```
 
-## Name the application layer, `UseCases`
-
-`UseCases` more clearly expresses the purpose of the layer than the generic, vacuous names, `Application`, or `App`.
-
-## What is the application layer?
-
-The application layer serves basically the same purpose as controllers in a web framework, but is made independent of delivery mechanism by a thin abstraction. In other words, it exposes the domain layer and its core business operations to the user via different use cases.
-
-The application layer shouldn't hold any core business logic; this should be in the domain layer. In fact, the domain layer should guard against this where possible, for example by using the `internal` keyword.
-
-The concerns of the application layer include loading and persisting the domain model, emitting side effects via integration events, authorisation, input validation, etc.
-
-In some cases, it might execute multiple domain operations in one use case. For example, a single use case might create a playlist and add song to it, such that the user can do this in a single step.
-
 ## Design the domain model before the database model
 
 [According to Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/05/15/NODB.html), "if you get the database involved early, then it will warp your design."
