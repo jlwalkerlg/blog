@@ -244,6 +244,12 @@ public class User : Entity<UserId>
 }
 ```
 
+## Business logic vs validation logic
+
+Validation logic is obvious and not specific to the domain or business. For example, it's obvious that a quantity should not be less than 0. This is the same for any business and any domain.
+
+On the other hand, it's not necessarily obvious that the quantity of a particular product purchased must be less than the quantity on hand in an e-commerce domain. That's a business rule, since it's specific to the business.
+
 ## Put all classes related to a use case in the same static class [optional]
 
 When organising application use-cases by feature, instead of separating the command, handler, validator, and response model into separate files, it's sometimes nice to keep them in the same file.
