@@ -1,5 +1,5 @@
 ---
-title: "Why reference other aggregates by identity?"
+title: "Why reference aggregates by identity?"
 date: "2024-05-30T16:32:58+01:00"
 categories:
   - Software Development
@@ -7,7 +7,7 @@ tags:
   - domain driven design
 ---
 
-There are two choices for referencing entities within other aggregates when building a domain model: reference by object, or reference by identity.
+There are two choices for referencing aggregates from other aggregates within a domain model: reference by object, or reference by identity.
 
 Referencing by object means that each entity contains direct object references to related entities in other aggregates. For example, an `Order` entity might have a `Products` property that contains a list of `Product` entities.
 
