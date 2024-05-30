@@ -1,5 +1,5 @@
 ---
-title: "What Is The Application Layer in The Clean Architecture?"
+title: "What is the application layer in The Clean Architecture?"
 date: "2024-05-27T09:38:26+01:00"
 categories:
   - Software Development
