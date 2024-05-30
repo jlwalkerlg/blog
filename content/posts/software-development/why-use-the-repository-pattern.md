@@ -1,14 +1,15 @@
 ---
-title: "Why Use the Repository Pattern?"
+title: "Why use the repository pattern?"
 date: "2024-05-27T20:49:11+01:00"
 categories:
   - Software Development
 tags:
   - software architecture
   - the clean architecture
+summary: The repository pattern is a design pattern where all database operations within the application layer are abstracted behind interfaces, rather than working with the data access layer or an ORM directly.
 ---
 
-{{< note >}}The repositories described here are not part of the domain model -- they live in the application layer of the clean architecture and are used to persist and load domain objects to and from the database.{{< /note >}}
+{{< note >}}The repositories described here are not part of the domain model. They live in the application layer and are used to persist and load the domain model to and from the database.{{< /note >}}
 
 The repository pattern is a design pattern where all database operations within the application layer are abstracted behind interfaces, rather than working with the data access layer or an ORM directly. Typically, you'll have a repository per entity or aggregate root (if following DDD). For example, if you have an `Order` aggregate, you'll typically have an `IOrderRepository` with methods like `GetOrderById` and `AddOrder`.
 
