@@ -19,4 +19,4 @@ You might choose to use MediatR because
 You might choose not to use MediatR because
 
 - it introduces indirection
-- the routing of requests to the corresponding handlers is opaque and less explicit than simple method calls into a service class.
+- the routing of requests to the corresponding handlers is opaque and less explicit than simple method calls.
