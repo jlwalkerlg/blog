@@ -10,20 +10,6 @@ tags:
 ShowToc: true
 ---
 
-## Use domain services for business logic spanning multiple aggregates
-
-Aggregates are self-contained, consistency boundaries that are enforce the business rules related only to themselves.
-
-But invariably there are business rules that span across multiple aggregates, such that no single aggregate can enforce the relevant business rules alone.
-
-One option to deal with this kind of business logic is to pull it out of the domain model and into the application layer. However, this drains the domain model of its responsibility and fragments the core business logic. All core business logic related to the domain model should stay in the domain layer.
-
-It's possible to put this kind of logic into a method on one of the involved aggregate roots, but often it doesn't naturally fit there.
-
-Instead, it's usually better to introduce a domain service to encapsulate this logic and coordinate between the involved aggregates.
-
-Domain services can use interfaces to access external services, such as a repository. For example, a domain service might want to check if a user email is unique. In this case, it can define an `IUserRepository` with a `UserExistsWithEmail` method.
-
 ## Use value objects for strong-typed entity IDs
 
 Using value objects instead of primitive types like GUIDs for entity IDs helps to avoid common bugs like those demonstrated below.
@@ -243,12 +229,6 @@ public class User : Entity<UserId>
     }
 }
 ```
-
-## Business logic vs validation logic
-
-Validation logic is obvious and not specific to the domain or business. For example, it's obvious that a quantity should not be less than 0. This is the same for any business and any domain.
-
-On the other hand, it's not necessarily obvious that the quantity of a particular product purchased must be less than the quantity on hand in an e-commerce domain. That's a business rule, since it's specific to the business.
 
 ## Put all classes related to a use case in the same static class [optional]
 
