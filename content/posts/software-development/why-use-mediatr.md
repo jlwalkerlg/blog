@@ -1,91 +1,22 @@
 ---
-title: "Why Use MediatR?"
-date: "2024-02-07T21:03:35Z"
+title: "Why use MediatR?"
+date: "2024-05-31T12:10:36+01:00"
 categories:
   - Software Development
 tags:
-  - software architecture
   - the clean architecture
 ---
 
-Why should I use MediatR to process web requests?
+MediatR is an out of the box command dispatcher library that's often used to separate the application layer from the delivery mechanism. For example, it's common for controllers in a web API to send requests to the application through MediatR.
 
-> _Because it's an out-of-the-box implementation of the command dispatcher pattern that helps you to extract logic out of your controllers._
+You might choose to use MediatR because
 
-And why should I extract logic out of my controllers?
+- it encourages you to [decouple your core application logic from the delivery mechanism]({{% siteurl "/posts/software-development/what-is-the-application-layer-in-the-clean-architecture/" %}}) (e.g., your web controllers).
+- it encourages you to represent all the requests and responses in your application as explicit data types (e.g., classes), making your app's functionality more visible and explicit
+- it encourages you to have one handler per request, rather than different service classes each handling multiple use cases — the single responsibility pattern
+- it allows you to use the chain of responsibility pattern via pipeline behaviours (middleware) for cross-cutting concerns.
 
-> _Because it allows your controllers to focus on HTTP requests/responses, and untangles your core application logic from those concerns._
+You might choose not to use MediatR because
 
-That sounds a lot like the single responsibility principle.
-
-> _It is!_
-
-Ok, keep going...
-
-> _Well, by untying your core application logic from any particular delivery mechanism, it allows the application to be driven by any delivery mechanism._
-
-What's a delivery mechanism?
-
-> _It's the mechanism by which the application receives input and returns output. On the web, that mechanism consists of HTTP requests and responses._
-
-And which other delivery mechanisms might I want to drive my application with?
-
-> _A CLI, a desktop GUI, a test suite..._
-
-A test suite also counts as a delivery mechanism?
-
-> _Of course!_
-
-And by decoupling my core application logic from the delivery mechanism, I imagine that I can more easily unit test my core application logic by driving the application with unit tests.
-
-> _Exactly!_
-
-Ok, ok. But couldn't I achieve the same decoupling by just calling application services directly from my controllers, without using the command dispatcher pattern?
-
-> _Yes._
-
-So why do I need the command dispatcher pattern?
-
-> _You don't, but it does provide some benefits that you don't get by just calling services directly._
-
-Like what?
-
-> _Well, it allows you to more easily implement cross-cutting concerns using the chain of responsibility pattern._
-
-Like authorisation and exception handling?
-
-> _Exactly._
-
-And is the chain of responsibility pattern kind of like middleware?
-
-> _Kind of._
-
-So why don't I just use the middleware functionality provided by my web framework?
-
-> _Because that middleware will only run when the web is the delivery mechanism._
-
-So it won't run and therefore won't be tested when my tests drive the application.
-
-> _Exactly!_
-
-So the middleware provided by my web framework is redundant/useless?
-
-> _No, you can use it for cross-cutting concerns related specifically to the web._
-
-Ah, I see. So is there any other reason to use the command dispatcher pattern?
-
-> _Well, it also encourages us to represent our application's use cases explicitly as strongly-types classes, which is more expressive and makes our application more clearly scream its architecture._
-
-Good point.
-
-> _It also encourages us to have one handler per command, rather than one service handling multiple use cases._
-
-Another application of the single responsibility principle.
-
-> _Exactly!!_
-
-Ok, ok. So are there any downsides to using MediatR or the command dispatcher pattern?
-
-> _Well, it does introduce some indirection in that your command handlers aren't being called explicitly from your controllers. But I think the damage is minimal, and the pros heavily outweigh the cons._
-
-Yep, me too. Where do I sign up?
+- it introduces indirection
+- the routing of requests to the corresponding handlers is opaque and less explicit than simple method calls into a service class.
