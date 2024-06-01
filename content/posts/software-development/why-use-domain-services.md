@@ -18,3 +18,28 @@ In these cases, you would use a domain service.
 Domain services live in the domain layer and are typically implemented as classes in object-oriented languages. They might use interfaces to access external services and often, for example, use domain repositories in order query, load and persist domain aggregates.
 
 For example, an `IssueManager` domain service might use an `IIssueRepository` to check how many issues are currently assigned to a user before assigning another. If too many are assigned, the domain service might throw an exception to enforce the business rule.
+
+```csharp
+public class IssueManager
+{
+  private readonly IIssueRepository _issueRepository;
+
+  public IssueManager(IIssueRepository issueRepository)
+  {
+    _issueRepository = issueRepository;
+  }
+
+  public async Task AssignAsync(Issue issue, User user)
+  {
+    var currentIssueCount = await _issueRepository.CountIssuesAssignedToUser(user);
+
+    if (currentIssueCount >= 3)
+    {
+      throw new IssueAssignmentException(user.UserName);
+    }
+
+    issue.AssignedUserId = user.Id;
+  }
+}
+
+```
