@@ -6,12 +6,12 @@ categories:
 tags:
   - software architecture
   - the clean architecture
-summary: The repository pattern is a design pattern where all database operations within the application layer are abstracted behind interfaces, rather than working with the data access layer or an ORM directly.
+summary: The repository pattern is a design pattern whereby all database operations within the application layer are abstracted behind interfaces, rather than working with the data access layer or an ORM directly.
 ---
 
 {{< note >}}The repositories described here are not part of the domain model. They live in the application layer and are used to persist and load the domain model to and from the database.{{< /note >}}
 
-The repository pattern is a design pattern where all database operations within the application layer are abstracted behind interfaces, rather than working with the data access layer or ORM directly. Typically, you'll have a repository per entity or aggregate root (if following DDD). For example, if you have an `Order` aggregate, you'll typically have an `IOrderRepository` with methods like `GetOrderById` and `AddOrder`.
+The repository pattern is a design pattern whereby all database operations within the application layer are abstracted behind interfaces, rather than working with the data access layer or ORM directly. Typically, you'll have a repository per entity or aggregate root (if following DDD). For example, if you have an `Order` aggregate, you'll typically have an `IOrderRepository` with methods like `GetOrderById` and `AddOrder`.
 
 You might choose to use the repository pattern in order to
 
