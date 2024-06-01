@@ -15,4 +15,4 @@ You might choose to do this so that
 
 - you don't have nullable ID properties in your domain model, which then require null checks whenever you access the entity's ID.
 - you can use the ID _before_ the entity is saved to the database, for example to pass it to another entity as an identity reference (foreign key), or to implement [the outbox pattern]({{% siteurl "/posts/software-development/the-outbox-pattern" %}}).
-- you don't need a database at all -- you can use some other storage mechanism to persist the domain model, and for unit tests you can run your code completely in memory.
+- you don't need a database at all -- you can use some other storage mechanism to persist the domain model, and for unit tests you can even run your code completely in memory.
