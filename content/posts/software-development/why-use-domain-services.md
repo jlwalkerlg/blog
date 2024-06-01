@@ -41,5 +41,4 @@ public class IssueManager
     issue.AssignedUserId = user.Id;
   }
 }
-
 ```
