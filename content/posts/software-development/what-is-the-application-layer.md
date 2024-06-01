@@ -16,8 +16,8 @@ If you're only ever likely to have one delivery mechanism, then it might be wort
 You might choose to separate your application from the delivery mechanism in order to
 
 - deliver your application via different mechanisms
-- keep your application logic cleaner and more readable. This might be more or less of an issue depending on how easy your framework of choice makes it to extract data out of the delivery mechanism.
-- make it easier to test your application logic. This can also be more or less of an issue depending on how easy it is to run your tests through the delivery mechanism, as opposed to driving your application with your tests directly.
+- keep your application logic cleaner and more readable, depending on how it easy your framework makes it to work the delivery mechanism
+- make it easier to test your application logic, depending on how easy it is to run your tests through the delivery mechanism, as opposed to driving your application with your tests directly.
 
 You might choose not to separate your application from the delivery mechanism because of
 
