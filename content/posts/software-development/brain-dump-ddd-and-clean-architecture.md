@@ -35,8 +35,8 @@ As such, they should be synchronous, like so.
 ```csharp
 public interface IUnitOfWork
 {
-    void Add<T>(T entity) where T : IAggregateRoot;
-    void Remove<T>(T entity) where T : IAggregateRoot;
+    void Add(IAggregateRoot entity);
+    void Remove(IAggregateRoot entity);
 }
 ```
 
