@@ -11,7 +11,7 @@ The application layer _is_ your application. That is, it doesn't matter whether 
 
 The application exposes different ports through which you can send it some input and make it do something. These inputs are necessarily extracted from the request by whichever delivery mechanism was used to access the application, and provided to the application in the format it expects. If you use a CLI, input is read from the console as a string, and the individual bits of data that make up the request get extracted out of the string and passed to the application in the format it defines. The data might get passed to the application as separate arguments to a method call, or packed into a request model DTO and passed to the application that way -- it's up to the application to define how it wants to be invoked.
 
-If you're only ever likely to have one delivery mechanism, then it might be worth considering whether it's really worth separating your application from it.
+If you're only ever likely to have one delivery mechanism, then it might be worth considering whether it's really worth separating it from your application.
 
 You might choose to separate your application from the delivery mechanism in order to
 
