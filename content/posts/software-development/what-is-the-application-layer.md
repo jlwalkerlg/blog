@@ -13,11 +13,11 @@ The application exposes different ports through which you can send it some input
 
 If you're only ever likely to have one delivery mechanism, then it might be worth considering whether it's really worth separating it from your application.
 
-You might choose to separate your application from the delivery mechanism in order to
+You might choose to separate the delivery mechanism from your application in order to
 
-- deliver your application via different mechanisms
-- keep your application logic cleaner and more readable, depending on how it easy your framework makes it to work the delivery mechanism
-- make it easier to test your application logic, depending on how easy it is to run your tests through the delivery mechanism, as opposed to driving your application with your tests directly.
+- expose your application via different delivery mechanisms
+- keep your application logic cleaner and more readable. This depends on how easy your framework makes it to work the delivery mechanism, and how much the delivery mechanism therefore obscures your application logic.
+- make it easier to test your application logic without getting the delivery mechanism involved. This depends on how easy it is to run your tests through the delivery mechanism, as opposed to driving your application with your tests directly.
 
 You might choose not to separate your application from the delivery mechanism because of
 
