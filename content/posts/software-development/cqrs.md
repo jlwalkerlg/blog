@@ -25,6 +25,6 @@ This is acceptable because there are no side effects with queries, and as such n
 
 Because there's no domain model, there's also no obligation to use the same ORM as the command side. We're free to use a different ORM, a micro-ORM, raw SQL queries, or database views, and we can even make this decision per query.
 
-With this, we also get an increase in query performance, in addition to the benefits already mentioned.
+With this, we also get an increase in query performance.
 
 It also opens up the opportunity for further architectural patterns, like event sourcing, or having a separate database schema optimised for queries.
