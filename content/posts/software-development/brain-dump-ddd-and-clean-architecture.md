@@ -4,9 +4,9 @@ date: "2023-11-11T14:02:00Z"
 categories:
   - Software Development
 tags:
-  - domain driven design
-  - software architecture
-  - the clean architecture
+  - domain-driven-design
+  - software-architecture
+  - the-clean-architecture
 ShowToc: true
 ---
 

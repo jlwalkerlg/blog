@@ -4,8 +4,8 @@ date: "2020-08-31T11:04:00Z"
 categories:
   - Software Development
 tags:
-  - software architecture
-  - the clean architecture
+  - software-architecture
+  - the-clean-architecture
 ---
 
 The Clean Architecture is one of many architectures that aim to isolate the domain model, and make the code base more modular, more decoupled, and therefore more testable. It takes ideas from Ports and Adapters Architecture (Hexagonal Architecture), The Onion Architecture, and Domain-Driven Design, and as such shares many commonalities with them.

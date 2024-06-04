@@ -4,11 +4,11 @@ date: "2023-11-27T11:10:00Z"
 categories:
   - Software Development
 tags:
-  - software architecture
-  - domain driven design
-  - the clean architecture
+  - software-architecture
+  - domain-driven-design
+  - the-clean-architecture
   - cqrs
-  - vertical slice architecture
+  - vertical-slice-architecture
 ---
 
 The Clean Architecture (and others) call for the application layer to be free of external dependencies, to be persistence agnostic, and to interact with external services only through interfaces.

@@ -4,7 +4,7 @@ date: "2024-05-31T12:27:29+01:00"
 categories:
   - Software Development
 tags:
-  - domain driven design
+  - domain-driven-design
 ---
 
 _TLDR: use domain services to enforce business rules that span across multiple aggregates._

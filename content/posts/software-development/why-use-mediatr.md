@@ -4,7 +4,7 @@ date: "2024-05-31T12:10:36+01:00"
 categories:
   - Software Development
 tags:
-  - the clean architecture
+  - the-clean-architecture
 ---
 
 MediatR is an out of the box command dispatcher library that's often used to separate the application layer from the delivery mechanism. For example, it's common for controllers in a web API to send requests to the application through MediatR.

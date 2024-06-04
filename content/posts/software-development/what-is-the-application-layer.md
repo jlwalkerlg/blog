@@ -4,7 +4,7 @@ date: "2024-05-27T09:38:26+01:00"
 categories:
   - Software Development
 tags:
-  - the clean architecture
+  - the-clean-architecture
 ---
 
 The application layer _is_ your application. That is, it doesn't matter whether your application is invoked via a web controller, a CLI command, a Razor page, or an RPC endpoint: the functionality stays the same. If you have an existing API and you decide to also expose the application and its functionality as a CLI, then your application is still the same application as before, except now there's just another way to access it. The application itself is oblivious as to how it's accessed, and how it's accessed doesn't affect its design or shape its use cases.

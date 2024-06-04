@@ -4,9 +4,9 @@ date: "2020-08-31T17:32:00Z"
 categories:
   - Software Development
 tags:
-  - domain driven design
-  - software architecture
-  - the clean architecture
+  - domain-driven-design
+  - software-architecture
+  - the-clean-architecture
 ---
 
 Take a look at the standard diagram of [The Clean Architecture](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), and you'll notice a layer labelled "Application Business Rules", wherein the "Use Cases" are defined. Uncle Bob describes this layer as the one which contains "application specific business rules", and whose purpose is to "orchestrate the flow of data to and from the entities, and direct those entities to use their _enterprise wide_ business rules to achieve the goals of the use case".

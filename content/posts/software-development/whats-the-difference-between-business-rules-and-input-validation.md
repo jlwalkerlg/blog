@@ -4,7 +4,7 @@ date: "2024-05-30T14:49:50+01:00"
 categories:
   - Software Development
 tags:
-  - domain driven design
+  - domain-driven-design
 ---
 
 Input validation ensures that the inputs to the application from the external world are sound, and that the data is formatted correctly. These validation rules are obvious and universal -- they're not specific to any one business. For example, validating that a percentage value is between 0 and 100, or that an email field has a particular pattern, is not business-specific; these rules are universal, and are applicable to any domain.

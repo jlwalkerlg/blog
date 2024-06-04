@@ -4,8 +4,8 @@ date: "2021-07-13T10:10:00Z"
 categories:
   - Software Development
 tags:
-  - event driven architecture
-  - software architecture
+  - event-driven-architecture
+  - software-architecture
   - messaging
   - microservices
 ---

@@ -4,9 +4,9 @@ date: "2023-11-27T09:43:35Z"
 categories:
   - Software Development
 tags:
-  - software architecture
+  - software-architecture
   - cqrs
-  - domain driven design
+  - domain-driven-design
 ---
 
 Typically we have a single domain model that serves both reads and writes.

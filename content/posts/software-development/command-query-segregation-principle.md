@@ -4,9 +4,9 @@ date: "2020-08-30T19:26:00Z"
 categories:
   - Software Development
 tags:
-  - software architecture
+  - software-architecture
   - cqrs
-  - domain driven design
+  - domain-driven-design
 ---
 
 _CQRS is an architectural pattern whereby the system is separated according to two distinct responsibilities: reads/queries, and writes/commands. The basis for doing so is to recognise that it is impossible to effectively accommodate the needs of both responsibilities with the same unified model. By employing the single responsibility principle and separating them, we gain many benefits in terms of simplicity, performance, and scalability._

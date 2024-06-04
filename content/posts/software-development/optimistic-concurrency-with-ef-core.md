@@ -4,7 +4,7 @@ date: "2022-02-23T20:02:00Z"
 categories:
   - Software Development
 tags:
-  - ef core
+  - ef-core
 ---
 
 ## Problem

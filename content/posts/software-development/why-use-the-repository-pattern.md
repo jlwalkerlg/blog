@@ -4,8 +4,8 @@ date: "2024-05-27T20:49:11+01:00"
 categories:
   - Software Development
 tags:
-  - software architecture
-  - the clean architecture
+  - software-architecture
+  - the-clean-architecture
 summary: The repository pattern is a design pattern whereby all database operations within the application layer are abstracted behind interfaces, rather than working with the data access layer or an ORM directly.
 ---
 

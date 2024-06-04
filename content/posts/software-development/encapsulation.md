@@ -4,8 +4,8 @@ date: "2020-08-22T17:30:00Z"
 categories:
   - Software Development
 tags:
-  - domain driven design
-  - object oriented programming
+  - domain-driven-design
+  - object-oriented-programming
 ---
 
 Encapsulation is one of the four pillars of object-oriented programming, along with abstraction, inheritance and polymorphism. The idea is to restrict access to an object's internal state through the use of access modifiers, and only allow access through public-facing methods. By doing so, we are able to enforce certain rules as to how the state of our objects can be manipulated, while also keeping our code DRY.

@@ -5,7 +5,7 @@ draft: true
 categories:
   - Philosophy
 tags:
-  - free will
+  - free-will
 ---
 
 The idea of free will is something that we all take for granted. We carry around with us at all times a sense of personal agency where we feel as though we have the power to make deliberate choices. Each decision is well and truly our own, we feel, and if we could go back in time to the moment we made a particular decision, we imagine that we could have chosen otherwise.

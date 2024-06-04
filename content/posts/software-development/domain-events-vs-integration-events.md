@@ -4,10 +4,10 @@ date: "2023-11-12T10:14:00Z"
 categories:
   - Software Development
 tags:
-  - domain driven design
-  - event driven architecture
-  - software architecture
-  - the clean architecture
+  - domain-driven-design
+  - event-driven-architecture
+  - software-architecture
+  - the-clean-architecture
 ---
 
 Though domain events and integration events both events, their purposes are in fact very different.

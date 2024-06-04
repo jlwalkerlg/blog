@@ -4,9 +4,9 @@ date: "2023-11-17T14:14:01Z"
 categories:
   - Software Development
 tags:
-  - domain driven design
-  - software architecture
-  - the clean architecture
+  - domain-driven-design
+  - software-architecture
+  - the-clean-architecture
 ---
 
 Deciding where and how to handle errors in DDD is tricky because it involves two conflicting concerns: encapsulation of domain knowledge and user experience.

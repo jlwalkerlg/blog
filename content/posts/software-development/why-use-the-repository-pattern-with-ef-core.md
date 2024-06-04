@@ -4,7 +4,7 @@ date: "2024-06-02T06:52:43+01:00"
 categories:
   - Software Development
 tags:
-  - the clean architecture
+  - the-clean-architecture
 ---
 
 It's often argued that since EF Core is itself already an implementation of the repository pattern (and the unit of work pattern) and supports multiple databases, including an in-memory database suitable for testing, that abstracting away EF Core from your application is redundant and unnecessary.

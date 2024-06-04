@@ -4,9 +4,9 @@ date: "2023-11-27T10:36:42Z"
 categories:
   - Software Development
 tags:
-  - software architecture
-  - domain driven design
-  - the clean architecture
+  - software-architecture
+  - domain-driven-design
+  - the-clean-architecture
 ---
 
 There's often a lot of debate around whether repositories should go in the application layer or in the domain layer.

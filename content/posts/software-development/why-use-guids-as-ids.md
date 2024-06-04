@@ -4,7 +4,7 @@ date: "2024-05-30T15:44:43+01:00"
 categories:
   - Software Development
 tags:
-  - domain driven design
+  - domain-driven-design
 ---
 
 It's common practice for developers to use integers as entity IDs, where the integers are primary keys within a database that get generated and auto-incremented on insert. As such, entities have no ID when they're first created until they've been saved to the database and the last inserted ID is subsequently attached to the entity.

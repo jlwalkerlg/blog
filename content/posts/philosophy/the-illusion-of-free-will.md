@@ -4,7 +4,7 @@ date: "2021-12-21T11:34:00Z"
 categories:
   - Philosophy
 tags:
-  - free will
+  - free-will
 ---
 
 > _Man can do what he wills but he cannot will what he wills._
