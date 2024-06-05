@@ -1,18 +1,18 @@
 ---
-title: "Implementing the Outbox Pattern With Laravel"
-date: "2021-07-13T10:10:00Z"
+title: Implementing the Outbox Pattern With Laravel
+date: 2021-07-13T10:10:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - event-driven-architecture
-  - software-architecture
-  - messaging
-  - microservices
+- event-driven-architecture
+- software-architecture
+- messaging
+- microservices
 ---
 
-_Source code available on GitHub at https://github.com/jlwalkerlg/laravel-outbox-pattern-demo_
+*Source code available on GitHub at https://github.com/jlwalkerlg/laravel-outbox-pattern-demo*
 
-Laravel's event system makes it simple to implement [the outbox pattern]({{< ref "/posts/software-development/the-outbox-pattern.md" >}}) and deal with failures in processing side effects.
+Laravel's event system makes it simple to implement [the outbox pattern](the-outbox-pattern.md) and deal with failures in processing side effects.
 
 A common scenario when registering a new user in a web application is sending them a confirmation or a welcome message via email.
 
@@ -20,7 +20,7 @@ In Laravel, events are a great way to decouple side effects, such as sending a c
 
 In Laravel, a naïve implementation might look like the following.
 
-```php
+````php
 // app/Http/Controllers/RegisterUserController.php
 
 class RegisterUserController extends Controller
@@ -34,9 +34,9 @@ class RegisterUserController extends Controller
         return response()->json($user, 201);
     }
 }
-```
+````
 
-```php
+````php
 // app/Listeners/SendUserRegisteredConfirmationEmailListener.php
 
 class SendUserRegisteredConfirmationEmailListener
@@ -47,9 +47,9 @@ class SendUserRegisteredConfirmationEmailListener
             ->send(new UserRegisteredConfirmationEmail($event->user));
     }
 }
-```
+````
 
-```php
+````php
 // app/Providers/EventServiceProvider.php
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -62,7 +62,7 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 }
-```
+````
 
 The problem here is that, if an exception is throw in send the confirmation email, a new user will have been inserted into the database but the email will never be sent. Other scenarios might have more severe consequences, such as failing to collect payment or dispatch a product after a user places an order.
 
@@ -74,17 +74,17 @@ Thankfully, Laravel makes it easy to queue events so they are saved to the datab
 
 First, make sure that the `QUEUE_CONNECTION` environment variable is set to database.
 
-```
+````
 # .env
 
 ...
 QUEUE_CONNECTION=database
 ...
-```
+````
 
 Next, ensure that any event listeners whose work should be queued implement the `Illuminate\Contracts\Queue\ShouldQueue` interface. Note that any listeners not implementing this interface will still receive the event for processing immediately.
 
-```php
+````php
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendUserRegisteredConfirmationEmailListener implements ShouldQueue
@@ -95,11 +95,11 @@ class SendUserRegisteredConfirmationEmailListener implements ShouldQueue
             ->send(new UserRegisteredConfirmationEmail($event->user));
     }
 }
-```
+````
 
 Finally, wrap any operations that should be atomic in a database transaction.
 
-```php
+````php
 class RegisterUserController extends Controller
 {
     public function __invoke(RegisterUserRequest $request)
@@ -115,7 +115,7 @@ class RegisterUserController extends Controller
         return response()->json($user, 201);
     }
 }
-```
+````
 
 With this, the `UserRegisteredEvent` event is queued before it is dispatched to `SendUserRegisteredConfirmationEmailListener` and so if an exception is throw in sending the email, it is still saved in the database and can be retried later.
 

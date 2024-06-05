@@ -1,17 +1,19 @@
 ---
-title: "Schopenhauer on Happiness"
-date: "2020-05-10T13:53:00Z"
+title: Schopenhauer on Happiness
+date: 2020-05-10T13:53:00Z
 categories:
-  - Philosophy
+- Philosophy
 tags:
-  - schopenhauer
+- schopenhauer
 ---
 
-> _Happiness consists in a frequent repetition of pleasure._
 
-_The Essays of Arthur Schopenhauer: the Wisdom of Life_ comprise Schopenhauer's reflections on "how to lead a happy existence" — one which "would be decidedly preferable to non-existence; implying that we should cling to it for its own sake, and not merely from the fear of death."
+ > 
+ > *Happiness consists in a frequent repetition of pleasure.*
 
-Paradoxically, he begins by conceding that his own philosophical system, laid out in _The World as Will and Representation_, denies that such an existence could possibly exist. For to live is to strive endlessly in order to satisfy an insatiable _will to life_. Being insatiable, humans are by nature bound to be always unsatisfied, and even in achieving our goals we only create an empty space in which the ever-present will to life is plagued by boredom.
+*The Essays of Arthur Schopenhauer: the Wisdom of Life* comprise Schopenhauer's reflections on "how to lead a happy existence" — one which "would be decidedly preferable to non-existence; implying that we should cling to it for its own sake, and not merely from the fear of death."
+
+Paradoxically, he begins by conceding that his own philosophical system, laid out in *The World as Will and Representation*, denies that such an existence could possibly exist. For to live is to strive endlessly in order to satisfy an insatiable *will to life*. Being insatiable, humans are by nature bound to be always unsatisfied, and even in achieving our goals we only create an empty space in which the ever-present will to life is plagued by boredom.
 
 Nevertheless he continues, but not without remarking that "in elaborating the scheme of a happy existence, I have had to make a complete surrender of the higher metaphysical and ethical standpoint to which my own theories lead; and everything I shall say here will to some extent rest upon a compromise; in so far, that is, as I take the common standpoint of every day, and embrace the error which is at the bottom of it."
 
@@ -25,7 +27,8 @@ Schopenhauer divides the human lot into three distinct classes:
 
 ## Personality, or What a Person Is
 
-> _The first and most essential element in our life's happiness is what we are,—our personality, if for no other reason than that it is a constant factor coming into play under all circumstances._
+ > 
+ > *The first and most essential element in our life's happiness is what we are,—our personality, if for no other reason than that it is a constant factor coming into play under all circumstances.*
 
 According to Schopenhauer, personality is by far the most important contributor to a person's happiness, since it "accompanies him always and everywhere, and gives its colour to all his experiences."
 
@@ -33,17 +36,19 @@ He reinforces this idea multiple times throughout the essay. "Every man is pent 
 
 Schopenhauer thinks it wise to recognise the character of our own personality and to live accordingly: "the only thing that stands in our power to achieve, is to make the most advantageous use possible of the personal qualities we possess, and accordingly to follow such pursuits only as will call them into play." Also, "pleasure always involves the use of one's own powers, and happiness consists in a frequent repetition of pleasure."
 
-In elaborating which personal qualities are most beneficial to a person's happiness, he says "a noble nature, a capable head, a joyful temperament, bright spirits, a well-constituted, perfectly sound physique, in a word, _mens sana in corpore sano_, are the first and most important elements in happiness."
+In elaborating which personal qualities are most beneficial to a person's happiness, he says "a noble nature, a capable head, a joyful temperament, bright spirits, a well-constituted, perfectly sound physique, in a word, *mens sana in corpore sano*, are the first and most important elements in happiness."
 
 Of these qualities, he sees a cheerful temperament as the greatest: "of all these, the one which makes us the most directly happy is a genial flow of good spirits; for this excellent quality is its own immediate reward. The man who is cheerful and merry has always a good reason for being so,—the fact, namely, that he is so."
 
-> That is the highest blessing for beings like us, whose existence is but an infinitesimal moment between two eternities. To secure and promote this feeling of cheerfulness should be the supreme aim of all our endeavours after happiness.
+ > 
+ > That is the highest blessing for beings like us, whose existence is but an infinitesimal moment between two eternities. To secure and promote this feeling of cheerfulness should be the supreme aim of all our endeavours after happiness.
 
 To promote this feeling of cheerfulness, he describes good health and thus daily exercise as the most important factor: "it is certain that nothing contributes so little to cheerfulness as riches, or so much, as health," and later "good health is by far the most important element in human happiness." The importance of health "may be seen by comparing the influence which the same external circumstances or events have upon us when we are well and strong with the effects which they have when we are depressed and troubled with ill-health."
 
 Schopenhauer then goes on to describe boredom as a major impediment to happiness, and calls a wealthy mind the best remedy for it. Boredom is born out of the lack of anything to strive after in spite of the insatiable will to life which always requires such striving, and is innate in all human beings. He says "the original purpose of those forces with which nature has endowed man is to enable him to struggle against the difficulties which beset him on all sides. But if this struggle comes to an end, his unemployed forces become a burden to him." Therefore,
 
-> The two foes of human happiness are pain and boredom.
+ > 
+ > The two foes of human happiness are pain and boredom.
 
 In combating boredom, he says "nothing is so good a protection against such misery as inward wealth, the wealth of the mind, because the greater it grows, the less room it leaves for boredom. The inexhaustible activity of thought!" This is particularly important in old age, when all other sources of happiness dry up, and only what a person has in themselves remains.
 
@@ -53,17 +58,20 @@ Speaking of a high degree of intellect, he says "the happiest destiny on earth i
 
 ## Property, or What a Person Has
 
-> _Discontent springs from a constant endeavour to increase the amount of our claims, when we are powerless to increase the amount which will satisfy them._
+ > 
+ > *Discontent springs from a constant endeavour to increase the amount of our claims, when we are powerless to increase the amount which will satisfy them.*
 
 Schopenhauer recognises the value of wealth insofar as it allows one to be at leisure, free from the need to strive after what is needed for survival, and thus allows a person to concentrate on the more important factor in human happiness: personality, or what a person is. He puts it thus: "external circumstances must be favourable enough to allow a man to be master of his life and happiness."
 
 However, wealth in and of itself does not lead to happiness, for there can never be enough of it as we always expect more. When we amass wealth and property in times of good fortune, our expectations expand, and it is precisely this growth of expectations which delights us. However, "when the expansion is complete, the delight ceases; we have become accustomed to the increase in our claims, and consequently indifferent to the amount of wealth which satisfies them."
 
-> A man never feels the loss of things which it never occurs to him to ask for; he is just as happy without them; whilst another, who may have a hundred times as much, feels miserable because he has not got the one thing he wants. In fact, here too, every man has an horizon of his own, and he will expect as much as he thinks it is possible for him to get. If an object within his horizon looks as though he could confidently reckon on getting it, he is happy; but if difficulties come in the way, he is miserable. What lies beyond his horizon has no effect at all upon him. So it is that the vast possessions of the rich do not agitate the poor, and conversely, that a wealthy man is not consoled by all his wealth for the failure of his hopes. Riches, one may say, are like sea-water; the more you drink the thirstier you become; and the same is true of fame.
+ > 
+ > A man never feels the loss of things which it never occurs to him to ask for; he is just as happy without them; whilst another, who may have a hundred times as much, feels miserable because he has not got the one thing he wants. In fact, here too, every man has an horizon of his own, and he will expect as much as he thinks it is possible for him to get. If an object within his horizon looks as though he could confidently reckon on getting it, he is happy; but if difficulties come in the way, he is miserable. What lies beyond his horizon has no effect at all upon him. So it is that the vast possessions of the rich do not agitate the poor, and conversely, that a wealthy man is not consoled by all his wealth for the failure of his hopes. Riches, one may say, are like sea-water; the more you drink the thirstier you become; and the same is true of fame.
 
 ## Position, or a Person's Place in the Estimation of Others
 
-> _We should add very much to our happiness by a timely recognition of the simple truth that every man's chief and real existence is in his own skin, and not in other people's opinions._
+ > 
+ > *We should add very much to our happiness by a timely recognition of the simple truth that every man's chief and real existence is in his own skin, and not in other people's opinions.*
 
 Schopenhauer warns that we should limit the effect we allow other people's opinions to have on our happiness, otherwise "a man is the slave of what other people are pleased to think" and "a man is in a very bad way, who finds no source of happiness in the first two classes of blessings already treated of, but has to seek it in the third."
 
@@ -77,7 +85,8 @@ We can do so be realising "how superficial and futile are most people's thoughts
 
 Further, we should recognise that their opinions have little consequence or positive influence on our lives: "the truth is that the value we set upon the opinion of others, and our constant endeavour in respect of it, are each quite out of proportion to any result we may reasonably hope to attain."
 
-> The only way of putting an end to this universal folly is to see clearly that it is a folly; and this may be done by recognising the fact that most of the opinions in men's heads are apt to be false, perverse, erroneous and absurd, and so in themselves unworthy of attention; further, that other people's opinions can have very little real and positive influence upon us in most of the circumstances and affairs of life.
+ > 
+ > The only way of putting an end to this universal folly is to see clearly that it is a folly; and this may be done by recognising the fact that most of the opinions in men's heads are apt to be false, perverse, erroneous and absurd, and so in themselves unworthy of attention; further, that other people's opinions can have very little real and positive influence upon us in most of the circumstances and affairs of life.
 
 Of pride, Schopenhauer says that it is generally thought of as something of a vice, "which is generally found fault with, and cried down," but usually by those who have nothing on which to pride themselves. He advises instead that "anyone who possesses any kind of superiority or merit will do well to keep his eyes fixed on it if he does not want it to be entirely forgotten; for if a man is good-natured enough to ignore his own privileges, and hob-nob with the generality of other people, as if he were quite on their level, they will be sure to treat him, frankly and candidly, as one of themselves."
 
@@ -93,4 +102,5 @@ One needn't react to such an insult, says Schopenhauer, since "a man must himsel
 
 Fame, says Schopenhauer, is "exposed to all the chances of fate," and as such is not to be sought after in the pursuit of happiness. Rather, "It is the possession of a great heart or a great head, and not the mere fame of it, which is worth having, and conducive to happiness. Not fame, but that which deserves to be famous, is what a man should hold in esteem."
 
-> _Other people's heads are a wretched place to be the home of a man's true happiness._
+ > 
+ > *Other people's heads are a wretched place to be the home of a man's true happiness.*

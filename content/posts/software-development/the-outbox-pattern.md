@@ -1,13 +1,13 @@
 ---
-title: "The Outbox Pattern"
-date: "2021-06-08T15:21:00Z"
+title: The Outbox Pattern
+date: 2021-06-08T15:21:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - event-driven-architecture
-  - software-architecture
-  - messaging
-  - microservices
+- event-driven-architecture
+- software-architecture
+- messaging
+- microservices
 ---
 
 ## The Problem
@@ -55,7 +55,7 @@ For example, a consumer that handles `OrderConfirmed` events might check if the 
 
 ## Resources
 
-- [The Outbox Pattern – Kamil Grzybek](http://www.kamilgrzybek.com/design/the-outbox-pattern/)
-- [Six Little Lines of Fail – Jimmy Bogard](https://youtu.be/VvUdvte1V3s)
-- [Reliably Save State & Publish Events (Outbox Pattern) – CodeOpinion](https://youtu.be/u8fOnxAxKHk)
-- [Handling Duplicate Messages (Idempotent Consumers) – CodeOpinion](https://youtu.be/xeBY8fCWfvU)
+* [The Outbox Pattern – Kamil Grzybek](http://www.kamilgrzybek.com/design/the-outbox-pattern/)
+* [Six Little Lines of Fail – Jimmy Bogard](https://youtu.be/VvUdvte1V3s)
+* [Reliably Save State & Publish Events (Outbox Pattern) – CodeOpinion](https://youtu.be/u8fOnxAxKHk)
+* [Handling Duplicate Messages (Idempotent Consumers) – CodeOpinion](https://youtu.be/xeBY8fCWfvU)

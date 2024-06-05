@@ -1,10 +1,10 @@
 ---
-title: "Why use GUIDs as IDs?"
-date: "2024-05-30T15:44:43+01:00"
+title: Why use GUIDs as IDs?
+date: 2024-05-30T15:44:43+01:00
 categories:
-  - Software Development
+- Software Development
 tags:
-  - domain-driven-design
+- domain-driven-design
 ---
 
 It's common practice for developers to use integers as entity IDs, where the integers are primary keys within a database that get generated and auto-incremented on insert. As such, entities have no ID when they're first created until they've been saved to the database and the last inserted ID is subsequently attached to the entity.
@@ -13,6 +13,6 @@ Another option is to use GUIDs (or UUIDs) as entity IDs, which can be generated 
 
 You might choose to do this so that
 
-- you don't have nullable ID properties in your domain model, which then require null checks whenever you access the entity's ID.
-- you can use the ID _before_ the entity is saved to the database, for example to pass it to another entity as an identity reference (foreign key), or to implement [the outbox pattern]({{< ref "/posts/software-development/the-outbox-pattern.md" >}}).
-- you don't need a database at all -- you can use some other storage mechanism to persist the domain model, and for unit tests you can even run your code completely in memory.
+* you don't have nullable ID properties in your domain model, which then require null checks whenever you access the entity's ID.
+* you can use the ID *before* the entity is saved to the database, for example to pass it to another entity as an identity reference (foreign key), or to implement [the outbox pattern](the-outbox-pattern.md).
+* you don't need a database at all -- you can use some other storage mechanism to persist the domain model, and for unit tests you can even run your code completely in memory.

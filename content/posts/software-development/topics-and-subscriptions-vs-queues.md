@@ -1,13 +1,13 @@
 ---
-title: "Topics and Subscriptions vs Queues"
-date: "2021-10-06T13:52:00Z"
+title: Topics and Subscriptions vs Queues
+date: 2021-10-06T13:52:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - event-driven-architecture
-  - software-architecture
-  - messaging
-  - microservices
+- event-driven-architecture
+- software-architecture
+- messaging
+- microservices
 ---
 
 Each queue sends each message it contains to a single consumer. So, if you have multiple consumers interested in the same message, only one of them will receive it (unless you have some manual dispatching mechanism in place).

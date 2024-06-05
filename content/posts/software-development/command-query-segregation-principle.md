@@ -1,29 +1,29 @@
 ---
-title: "Command Query Segregation Principle"
-date: "2020-08-30T19:26:00Z"
+title: Command Query Segregation Principle
+date: 2020-08-30T19:26:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - software-architecture
-  - cqrs
-  - domain-driven-design
+- software-architecture
+- cqrs
+- domain-driven-design
 ---
 
-_CQRS is an architectural pattern whereby the system is separated according to two distinct responsibilities: reads/queries, and writes/commands. The basis for doing so is to recognise that it is impossible to effectively accommodate the needs of both responsibilities with the same unified model. By employing the single responsibility principle and separating them, we gain many benefits in terms of simplicity, performance, and scalability._
+*CQRS is an architectural pattern whereby the system is separated according to two distinct responsibilities: reads/queries, and writes/commands. The basis for doing so is to recognise that it is impossible to effectively accommodate the needs of both responsibilities with the same unified model. By employing the single responsibility principle and separating them, we gain many benefits in terms of simplicity, performance, and scalability.*
 
-![CQRS diagram]({{% siteurl "/images/cqrs.png" %}})
+![CQRS](..\..\Attachments\cqrs.png)
 
 ## Origins
 
 CQRS finds its origins in the command-query separation (CQS) principle of Bertrand Meyer, which suggests that a method should either produce some side effect, like a state mutation, or return some data — but not both. The reason for doing so is simplicity and readability: it becomes much easier to see at a glance what the intent of the method is. If the return type is void, then the method produces some side effect; otherwise, it returns data and is pure (free of side effects). This is essentially a low-level application of the single responsibility principle, and makes the code much easier to reason about. Like always, there are exceptional cases where this separation is either infeasible or not worth the trouble, such as in the case of popping an item from a stack, or an I/O operation that needs to be atomic. For the most part though, it's a good rule to follow. An example can be seen below.
 
-```csharp
+````csharp
 public interface IBookService
 {
     void SaveBook(Book book);
     List<Book> GetAllBooks();
 }
-```
+````
 
 CQRS was originally thought to be nothing more than an extension of this principle to the level of architecture. However, it turns out that in making this extension we gain many opportunities that are not possible with CQS alone, and so the two are now recognised as different patterns. Nevertheless, they both involve the same fundamental idea and as such provide our code with the same benefit: simplicity.
 
@@ -31,7 +31,7 @@ With CQRS, each request entering our application is either a command that mutate
 
 The examples below, taken from [Greg Young's notes on CQRS](https://cqrs.files.wordpress.com/2010/11/cqrs_documents.pdf), show a command, a query, and their respective handlers.
 
-```csharp
+````csharp
 public class DeactivateInventoryItemCommand
 {
     public Guid Id { get; }
@@ -51,9 +51,9 @@ public class DeactivateInventoryItemHandler : ICommandHandler<DeactivateInventor
         // ...
     }
 }
-```
+````
 
-```csharp
+````csharp
 public class GetBooksQuery : IQuery
 {
     public Guid CategoryId { get; }
@@ -75,7 +75,7 @@ public class GetBooksHandler : IQueryHandler<GetBooksQuery, List<BookDto>>
         // ...
     }
 }
-```
+````
 
 It is important to note that it is impossible, or not recommended, for command handlers to return void, as in CQS; they should in most cases return to the client or calling function at least an acknowledgement that the command has been processed, and whether or not it was successful. In the case of a failure, it should likely also return some explanation of what went wrong — an error message and/or validation error messages. It is also acceptable for a command handler to return any metadata that may be needed by the client, for example the ID of a newly-created resource. However, besides metadata, a command shouldn't return any real application state for the client to display, since this is the role of the query side.
 
@@ -85,7 +85,7 @@ One benefit we gain by representing the commands and queries of our application 
 
 While not intrinsic to CQRS, it does follow naturally from the explicit representation of commands and queries as first-class objects, and is one example of the simplicity we gain by applying CQRS to a code base.
 
-```csharp
+````csharp
 public class LoggerDecorator<TRequest, TResponse>
     : ICommandHandler<TRequest, TResponse>
     : IQueryHandler<TRequest, TResponse>
@@ -105,7 +105,7 @@ public class LoggerDecorator<TRequest, TResponse>
         return handler.Handle(request);
     }
 }
-```
+````
 
 ## Task-Based User Interfaces
 
@@ -133,7 +133,7 @@ By doing so, we are able to avoid dealing with domain-centric repositories and i
 
 The query model thus becomes a "Thin Read Layer" that sits on top of the database, providing the exact data required by the client for a particular screen.
 
-![CQRS query side diagram]({{% siteurl "/images/cqrs-query-side.png" %}})
+![CQRS query side diagram](..\..\Attachments\cqrs-query-side.png)
 
 Note that, unlike with the command side, there are no data mutations on the query side of the architecture, no opportunities to violate domain invariants, and therefore no need for such aggressive encapsulation of the domain model.
 
@@ -147,7 +147,7 @@ Note, however, that this separation at the database level adds a significant ove
 
 After applying CQRS, the command side remains largely the same as before, focusing on behavioural, domain-centric semantics. The difference, however, is that the code intended only to support flexible querying of the underlying data has been ripped out, leaving a much cleaner and less convoluted code base.
 
-![CQRS command side diagram]({{% siteurl "/images/cqrs-command-side.png" %}})
+![CQRS command side diagram](..\..\Attachments\cqrs-command-side.png)
 
 ## Summary
 
@@ -155,5 +155,5 @@ Using a single unified model for both reads and writes leads to a host of proble
 
 ## Resources
 
-- [Pluralsight course on CQRS by Vladimir Khorikov](https://app.pluralsight.com/library/courses/cqrs-in-practice/)
-- [CQRS documents by Greg Young](https://cqrs.files.wordpress.com/2010/11/cqrs_documents.pdf)
+* [Pluralsight course on CQRS by Vladimir Khorikov](https://app.pluralsight.com/library/courses/cqrs-in-practice/)
+* [CQRS documents by Greg Young](https://cqrs.files.wordpress.com/2010/11/cqrs_documents.pdf)

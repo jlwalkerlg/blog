@@ -1,15 +1,17 @@
 ---
-title: "The Illusion of Free Will"
-date: "2021-12-21T11:34:00Z"
+title: The Illusion of Free Will
+date: 2021-12-21T11:34:00Z
 categories:
-  - Philosophy
+- Philosophy
 tags:
-  - free-will
+- free-will
 ---
 
-> _Man can do what he wills but he cannot will what he wills._
->
-> -- <cite>Arthur Schopenhauer On The Freedom Of The Will (1839)</cite>
+
+ > 
+ > *Man can do what he wills but he cannot will what he wills.*
+ > 
+ > -- <cite>Arthur Schopenhauer On The Freedom Of The Will (1839)</cite>
 
 What is free will?
 
@@ -49,4 +51,4 @@ But the same is true for human beings. We too are in some sense victims of biolo
 
 Truly, all of life comes down to luck — both good and bad.
 
-{{< youtube pCofmZlC72g >}}
+{{\< youtube pCofmZlC72g >}}

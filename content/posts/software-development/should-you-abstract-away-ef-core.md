@@ -1,14 +1,14 @@
 ---
-title: "Should You Abstract Away EF Core?"
-date: "2023-11-27T11:10:00Z"
+title: Should You Abstract Away EF Core?
+date: 2023-11-27T11:10:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - software-architecture
-  - domain-driven-design
-  - the-clean-architecture
-  - cqrs
-  - vertical-slice-architecture
+- software-architecture
+- domain-driven-design
+- the-clean-architecture
+- cqrs
+- vertical-slice-architecture
 ---
 
 The Clean Architecture (and others) call for the application layer to be free of external dependencies, to be persistence agnostic, and to interact with external services only through interfaces.
@@ -33,17 +33,17 @@ This is possible, and doesn't violate DDD principles, but if the query handlers 
 
 An alternative is to write a thin abstraction over the `DbContext`, and use that in the application layer instead. On the command side, this abstraction would only expose the aggregate roots for querying (and creating/deleting), without exposing the non-root entities. This still gives use the flexibility to take advantage of working directly with EF Core in our command handlers, without opening our domain model up too much.
 
-```csharp
+````csharp
 public interface IUnitOfWork
 {
   IQueryable<Subscription> Subscriptions { get; }
   Task SaveChangesAsync(CancellationToken cancellationtoken = default);
 }
-```
+````
 
 The implementation in the infrastructure layer would ensure that any non-root entities are eager-loaded with their aggregate roots.
 
-```csharp
+````csharp
 internal class EfUnitOfWork : IUnitOfWork
 {
   private readonly AppDbContext _context;
@@ -60,19 +60,19 @@ internal class EfUnitOfWork : IUnitOfWork
     await _context.SaveChangesAsync(cancellationToken);
   }
 }
-```
+````
 
 If we're following CQRS, the read side can have a different interface that lets it query any entity in the domain model, root or non-root, without allowing it to make any changes to the domain model.
 
-```csharp
+````csharp
 public interface IQueries
 {
   IQueryable<Subscription> Subscriptions { get; }
   IQueryable<SubscriptionPeriod> SubscriptionPeriods { get; }
 }
-```
+````
 
-```csharp
+````csharp
 internal class EfQueries : IQueries
 {
   private readonly AppDbContext _context;
@@ -85,7 +85,7 @@ internal class EfQueries : IQueries
   public IQueryable<Subscription> Subscriptions => _context.Subscriptions.AsNoTracking();
   public IQueryable<SubscriptionPeriod> SubscriptionPeriods => _context.SubscriptionPeriods.AsNoTracking();
 }
-```
+````
 
 The advantage of this approach is that we reduce the number of thin abstractions between the application layer and the infrastructure layer, which reduces indirection and often improves development speed. On the query side, it also allows us to project database query results directly to response models, without having to define a bunch of database query result models, passing them up to the application layer, and then finally mapping them to a response model.
 

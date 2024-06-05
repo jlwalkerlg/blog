@@ -1,13 +1,13 @@
 ---
-title: "Domain Events vs Integration Events"
-date: "2023-11-12T10:14:00Z"
+title: Domain Events vs Integration Events
+date: 2023-11-12T10:14:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - domain-driven-design
-  - event-driven-architecture
-  - software-architecture
-  - the-clean-architecture
+- domain-driven-design
+- event-driven-architecture
+- software-architecture
+- the-clean-architecture
 ---
 
 Though domain events and integration events both events, their purposes are in fact very different.
@@ -34,7 +34,7 @@ In any case, it's the application layer that actually executes the side effect.
 
 # Integration events
 
-The primary purpose of integration events is to inform other applications or bounded contexts that an event has occured within _this_ application.
+The primary purpose of integration events is to inform other applications or bounded contexts that an event has occured within *this* application.
 
 Contrary to domain events, integration events are raised by the application layer to communicate with other applications through an inter-process message bus. As such, they don't use the domain objects specific to the bounded context in which they are raised, because those domain objects do not necessarily have the same meaning in other bounded contexts.
 
@@ -48,11 +48,11 @@ What's needed here, however, is a domain event. Domain events are designed to be
 
 But if domain events aren't supposed to leave their bounded context or be published to a message bus, how can we use them with the outbox pattern?
 
-First, the outbox pattern is designed to reliably publish _integration events_ to a _message bus_. Since this isn't what we want, we can't use the outbox pattern. But we _can_ use a similar concept.
+First, the outbox pattern is designed to reliably publish *integration events* to a *message bus*. Since this isn't what we want, we can't use the outbox pattern. But we *can* use a similar concept.
 
 What we really want to do is perform some background work within the same application. Similar to the outbox pattern, we can have the application layer handle the domain event by creating one or more background jobs and storing them in the database using the unit of work. Then, a background service can periodically execute these jobs by dispatching them to handlers within the same application.
 
-As an implementation detail, a message bus _could_ be used to facilitate all or part of this process, but the messages should be scoped to the publishing application (for example, via routing keys and queue names).
+As an implementation detail, a message bus *could* be used to facilitate all or part of this process, but the messages should be scoped to the publishing application (for example, via routing keys and queue names).
 
 # How to publish domain events
 
@@ -60,7 +60,7 @@ So if domain events are raised by the domain layer, how are they dispatched to h
 
 A common approach when using EF Core is to be to override the `SaveChangesAsync` method on the `DbContext`, and use `MediatR` to dispatch the events before the changes are saved.
 
-```csharp
+````csharp
 internal class AppDbContext : DbContext
 {
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -76,11 +76,11 @@ internal class AppDbContext : DbContext
         return await base.SaveChangesAsync(cancellationToken);
     }
 }
-```
+````
 
 The events are exposed by domain entities as read-only collections.
 
-```csharp
+````csharp
 public abstract class Entity
 {
     private readonly List<IDomainEvent> _events = new();
@@ -92,21 +92,21 @@ public abstract class Entity
         _events.Add(evt);
     }
 }
-```
+````
 
 This works well but leaks responsibility: domain events should really be dispatched by the application layer, not the infrastructure layer.
 
 A different approach would be to proxy the unit of work in the application layer, and dispatch the events in the proxy. The proxy could even be transparent to the use case handlers if registered appropriately in the DI container.
 
-```csharp
+````csharp
 public interface IUnitOfWork
 {
     IEnumerable<IDomainEvent> GetDomainEvents();
     Task Commit(CancellationToken cancellationToken = default)
 }
-```
+````
 
-```csharp
+````csharp
 internal class UnitOfWorkProxy : IUnitOfWork
 {
     private readonly IUnitOfWork _proxied;
@@ -133,9 +133,9 @@ internal class UnitOfWorkProxy : IUnitOfWork
         await _proxied.Commit(cancellationToken);
     }
 }
-```
+````
 
-```csharp
+````csharp
 internal class EfCoreUnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _context;
@@ -156,7 +156,7 @@ internal class EfCoreUnitOfWork : IUnitOfWork
         await _context.SaveChangesAsync(cancellationToken);
     }
 }
-```
+````
 
 This approach also works, and doesn't leak responsibility like the first approach does, but introduces some extra complexity and indirection that might not be warranted.
 

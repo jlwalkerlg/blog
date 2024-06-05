@@ -1,0 +1,19 @@
+{{- $url := urls.Parse .Destination -}}
+{{- $scheme := $url.Scheme -}}
+
+<img src="
+  {{- if eq $scheme "" -}}
+    {{- if strings.HasSuffix $url.Path ".md" -}}
+      {{- relref .Page .Destination | safeURL -}}
+    {{- else -}}
+      {{ $src:= printf "%s%s%s" site.Home.Permalink .Page.File.Dir .Destination }}
+      {{ $src:= strings.Replace $src "\\" "/" }}
+      {{- $src | safeURL -}}
+    {{- end -}}
+  {{- else -}}
+    {{- .Destination | safeURL -}}
+  {{- end -}}"
+  {{- with .Title }} title="{{ . | safeHTML }}"{{- end -}}
+  {{- with .Text }} alt="{{ . | safeHTML }}"
+  {{- end -}}
+/>

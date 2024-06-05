@@ -1,12 +1,12 @@
 ---
-title: "Where to Put Repository Interfaces"
-date: "2023-11-27T10:36:42Z"
+title: Where to Put Repository Interfaces
+date: 2023-11-27T10:36:42Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - software-architecture
-  - domain-driven-design
-  - the-clean-architecture
+- software-architecture
+- domain-driven-design
+- the-clean-architecture
 ---
 
 There's often a lot of debate around whether repositories should go in the application layer or in the domain layer.
@@ -17,7 +17,7 @@ But the truth is that interfaces should be defined by the client that actually u
 
 As such, if the domain layer needs to access the database (e.g., in a domain service), it should define an interface to do so.
 
-But as per the interface segregation principle, this interface shouldn't contain any more functionality than is needed by the client (the domain layer); the application layer should define any interfaces _it_ needs to access the database separately.
+But as per the interface segregation principle, this interface shouldn't contain any more functionality than is needed by the client (the domain layer); the application layer should define any interfaces *it* needs to access the database separately.
 
 Therefore, both the domain layer and the application layer are likely to contain their own repository interfaces, both of which should be implemented by the infrastructure layer.
 

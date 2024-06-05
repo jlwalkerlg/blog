@@ -1,11 +1,11 @@
 ---
-title: "The Clean Architecture"
-date: "2020-08-31T11:04:00Z"
+title: The Clean Architecture
+date: 2020-08-31T11:04:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - software-architecture
-  - the-clean-architecture
+- software-architecture
+- the-clean-architecture
 ---
 
 The Clean Architecture is one of many architectures that aim to isolate the domain model, and make the code base more modular, more decoupled, and therefore more testable. It takes ideas from Ports and Adapters Architecture (Hexagonal Architecture), The Onion Architecture, and Domain-Driven Design, and as such shares many commonalities with them.
@@ -30,7 +30,7 @@ This layer is fully isolated from the outside world. It uses the ubiquitous lang
 
 ## The Application Layer
 
-The application layer is labelled on the above diagram as "Application Business Rules", and it is in this layer that the application exposes its interface to the outside world as defined by its use cases. These use cases are how the outside world interacts with the application; _they specify what the application does_. For example, there may be a use case for purchasing an order, viewing order history, or cancelling an order item.
+The application layer is labelled on the above diagram as "Application Business Rules", and it is in this layer that the application exposes its interface to the outside world as defined by its use cases. These use cases are how the outside world interacts with the application; *they specify what the application does*. For example, there may be a use case for purchasing an order, viewing order history, or cancelling an order item.
 
 In order to implement these use cases, this layer defers any business logic to the core domain model, where it belongs. If it needs to reach out to any infrastructure dependencies, such as the database, or an email notification system, it will define the implementation-agnostic interfaces it requires and the real implementations will be injected at run-time by dependency injection. As such, this layer is coupled to the domain core, but decoupled from infrastructure.
 
@@ -40,7 +40,7 @@ Besides decoupling and modularity, another advantage of defining the application
 
 Notice that this layer does handle user input/output, but it is not tied to a particular delivery mechanism, like the web. That is, it doesn't read input from a HTTP request, or return an HTML view or a JSON response. Instead, its inputs and outputs are simple, normalised data structures that can be sent and received from any delivery mechanism, whether the client be a web browser, a console application, a desktop application, or most importantly, a test suite!
 
-To see how this layer and its use case `Interactor` objects compare with DDD application services, the ports of Hexagonal Architecture, and domain services, [refer to this blog post]({{< ref "/posts/software-development/the-application-layer.md" >}}).
+To see how this layer and its use case `Interactor` objects compare with DDD application services, the ports of Hexagonal Architecture, and domain services, [refer to this blog post](the-application-layer.md).
 
 ## Interface Adapters
 
@@ -58,7 +58,7 @@ It is instructive at this point to see how a typical web request will play out, 
 
 Below is an example of a typical web controller, which extends the base controller provided by the framework (in this case ASP.NET Core), and accepts its dependencies via the constructor. These dependencies are injected at run-time by the framework. The controller packs the input from the incoming HTTP request into a simple DTO, passes it to the appropriate `Interactor`, then passes the application response to a `Presenter` to turn it into a format appropriate for the web.
 
-```csharp
+````csharp
 public class TodoController : ControllerBase
 {
     private readonly ICompleteTodoUseCase interactor;
@@ -81,13 +81,13 @@ public class TodoController : ControllerBase
         return presenter.Present(result);
     }
 }
-```
+````
 
-Note that the controller _could_ format the response itself, and the dependency rule would not have been violated. However, by passing it to the presenter, it obeys the single responsibility principle, and so keeps the code more modular. Alternatively, the `Interactor` could pass the response to the `Presenter` itself, and the `Controller` could in turn ask the `Presenter` for the result before returning it, for the same result.
+Note that the controller *could* format the response itself, and the dependency rule would not have been violated. However, by passing it to the presenter, it obeys the single responsibility principle, and so keeps the code more modular. Alternatively, the `Interactor` could pass the response to the `Presenter` itself, and the `Controller` could in turn ask the `Presenter` for the result before returning it, for the same result.
 
-After the `Controller` has passed control to the `Interactor` in the application layer, the `Interactor` loads the appropriate domain entity from the appropriate repository, saves the changes, and returns a simple `Result` object. This object is meant simply as a acknowledgement of whether or not the request was successful, and may contain an error in the case of a failure. In this case then, only metadata about the status of the request is returned, since this particular application follows [CQRS]({{< ref "/posts/software-development/cqrs.md" >}}) principles, but it is equally acceptable to return data from the `Interactor`, so long as the data is a simple data structure and is not tied to a particular delivery mechanism.
+After the `Controller` has passed control to the `Interactor` in the application layer, the `Interactor` loads the appropriate domain entity from the appropriate repository, saves the changes, and returns a simple `Result` object. This object is meant simply as a acknowledgement of whether or not the request was successful, and may contain an error in the case of a failure. In this case then, only metadata about the status of the request is returned, since this particular application follows [CQRS](cqrs.md) principles, but it is equally acceptable to return data from the `Interactor`, so long as the data is a simple data structure and is not tied to a particular delivery mechanism.
 
-```csharp
+````csharp
 public class CompleteTodoCommand
 {
     public CompleteTodoCommand(Guid id)
@@ -125,7 +125,7 @@ public class CompleteTodoInteractor : ICompleteTodoUseCase
         return Result.Ok();
     }
 }
-```
+````
 
 The other actors here include the Todo entity, `IUnitOfWork`, and `ITodoRepository`.
 
@@ -163,8 +163,8 @@ The dependency rule suggests that the inner-most layers of the onion is complete
 
 ## Resources
 
-- [Screaming Architecture blog post by Uncle Bob](http://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html)
-- [Clean Architecture blog post by Uncle Bob](http://blog.cleancoder.com/uncle-bob/2011/11/22/Clean-Architecture.html)
-- [The Clean Architecture blog post by Uncle Bob](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+* [Screaming Architecture blog post by Uncle Bob](http://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html)
+* [Clean Architecture blog post by Uncle Bob](http://blog.cleancoder.com/uncle-bob/2011/11/22/Clean-Architecture.html)
+* [The Clean Architecture blog post by Uncle Bob](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
-{{< youtube o_TH-Y78tt4 >}}
+{{\< youtube o_TH-Y78tt4 >}}

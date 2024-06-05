@@ -1,10 +1,10 @@
 ---
-title: "Optimistic Concurrency With EF Core"
-date: "2022-02-23T20:02:00Z"
+title: Optimistic Concurrency With EF Core
+date: 2022-02-23T20:02:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - ef-core
+- ef-core
 ---
 
 ## Problem
@@ -15,7 +15,7 @@ If user tries to cancel the order at the same time as the admin tries to accept 
 
 Our Order entity might look like the following.
 
-```csharp
+````csharp
 public class Order
 {
     public int Id { get; set; }
@@ -41,11 +41,11 @@ public class Order
         Status = "Cancelled";
     }
 }
-```
+````
 
 Now consider the following scenario where the user tries to cancel the order at the same time as the admin tries to accept it.
 
-```csharp
+````csharp
 using var adminContext = new OrderingDbContext();
 var orderToAccept = await adminContext.Orders!.FirstAsync();
 
@@ -57,7 +57,7 @@ await adminContext.SaveChangesAsync();
 
 orderToCancel.Cancel();
 await customerContext.SaveChangesAsync();
-```
+````
 
 1. Admin loads the order from the database.
 1. User loads the order from the database.
@@ -76,7 +76,7 @@ If we want to guard against concurrency issues on every update to an entity (i.e
 
 EF Core makes this simple. First, let's update our `Order` model to include a `RowVersion` property that will be updated automatically.
 
-```csharp
+````csharp
 public class Order
 {
     public int Id { get; set; }
@@ -103,11 +103,11 @@ public class Order
         Status = "Cancelled";
     }
 }
-```
+````
 
 Next, lets configure the property to be automatically updated on each write, and also let EF Core know to treat it as a concurrency token.
 
-```csharp
+````csharp
 public class OrderingDbContext : DbContext
 {
     public DbSet<Order>? Orders { get; set; }
@@ -132,22 +132,22 @@ public class OrderingDbContext : DbContext
             .IsRowVersion();
     }
 }
-```
+````
 
 The `.IsRowVersion()` method is short-hand for `.ValueGeneratedOnAddOrUpdate()`, which ensures the property is automatically incremented on each write, and `.IsConcurrencyToken()`, which tells EF Core to treat it as a concurrency token.
 
 Now, when the user writes their changes to the database when trying to cancel the order in step 4, EF Core generates the following SQL statement.
 
-```sql
+````sql
 UPDATE [Orders] SET [Status] = @p0
 WHERE [Id] = @p1 AND [RowVersion] = @p2;
-```
+````
 
 Since the `RowVersion` changed when the admin accepted the order, there are no records in the database with the expected Id and `RowVersion`, and so the number of affected rows is 0. EF Core recognises this and throw a `Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException` with the message "The database operation was expected to affect 1 row(s), but actually affected 0 row(s); data may have been modified or deleted since entities were loaded."
 
 For comparison, the SQL statement before configuring the concurrency token looked like the following.
 
-```sql
+````sql
 UPDATE [Orders] SET [Status] = @p0
 WHERE [Id] = @p1;
-```
+````

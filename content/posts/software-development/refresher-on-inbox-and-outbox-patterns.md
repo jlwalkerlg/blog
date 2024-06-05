@@ -1,13 +1,13 @@
 ---
-title: "Refresher on Inbox and Outbox Patterns"
-date: "2021-10-06T13:40:00Z"
+title: Refresher on Inbox and Outbox Patterns
+date: 2021-10-06T13:40:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - event-driven-architecture
-  - software-architecture
-  - messaging
-  - microservices
+- event-driven-architecture
+- software-architecture
+- messaging
+- microservices
 ---
 
 ## The Outbox Pattern

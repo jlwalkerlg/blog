@@ -1,21 +1,21 @@
 ---
-title: "The Application Layer"
-date: "2020-08-31T17:32:00Z"
+title: The Application Layer
+date: 2020-08-31T17:32:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - domain-driven-design
-  - software-architecture
-  - the-clean-architecture
+- domain-driven-design
+- software-architecture
+- the-clean-architecture
 ---
 
-Take a look at the standard diagram of [The Clean Architecture](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), and you'll notice a layer labelled "Application Business Rules", wherein the "Use Cases" are defined. Uncle Bob describes this layer as the one which contains "application specific business rules", and whose purpose is to "orchestrate the flow of data to and from the entities, and direct those entities to use their _enterprise wide_ business rules to achieve the goals of the use case".
+Take a look at the standard diagram of [The Clean Architecture](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), and you'll notice a layer labelled "Application Business Rules", wherein the "Use Cases" are defined. Uncle Bob describes this layer as the one which contains "application specific business rules", and whose purpose is to "orchestrate the flow of data to and from the entities, and direct those entities to use their *enterprise wide* business rules to achieve the goals of the use case".
 
 But what does this mean exactly, and why do we need such a layer? For example, many developers often neglect this layer and call directly into the core domain layer from their controllers. What's wrong with this approach, and how is a separate layer for use cases any different? Furthermore, how is this "application layer" different from the "application services layer" of domain-driven design, or the inner hexagon of Hexagonal Architecture, where the "core application" lives? Also, what's the difference between application services and domain services?
 
 ## Use Cases vs Controllers
 
-The only difference between use cases and controllers is that _controllers are coupled to the delivery mechanism (e.g. the web), whereas use cases are not_.
+The only difference between use cases and controllers is that *controllers are coupled to the delivery mechanism (e.g. the web), whereas use cases are not*.
 
 Apart from this, use cases and controllers really serve the same purpose: they accept user input; call into the domain model in order to actually implement a particular use case; and return a response to the user. Both use cases and controllers can also use dependency inversion to decouple themselves from all infrastructure, such as repositories.
 
@@ -35,17 +35,17 @@ Note that the use cases are not totally oblivious of the client; part of their p
 
 The application layer in The Clean Architecture is the same layer in which the ports are defined in Hexagonal Architecture. That is, the inside of the hexagon.
 
-The main difference is that Hexagonal Architecture doesn't actually define _layers_ — only an _inside_ and an _outside_ (of the hexagon). In other words, it says nothing about how to structure the inside of the hexagon. It only states that the core application should be decoupled from infrastructure by placing ports (interfaces) between them.
+The main difference is that Hexagonal Architecture doesn't actually define *layers* — only an *inside* and an *outside* (of the hexagon). In other words, it says nothing about how to structure the inside of the hexagon. It only states that the core application should be decoupled from infrastructure by placing ports (interfaces) between them.
 
 On the other hand, The Clean Architecture goes slightly further in suggesting that the inner hexagon should be made up of 2 layers: the application layer, and the domain layer. The application layer defines the ports for communication with infrastructure, and actually implements the use cases by deferring to the domain layer, which is designed with DDD in mind.
 
-![The Clean Architecture hexagon]({{% siteurl "/images/the-clean-architecture-hexagon.png" %}})
+![The Clean Architecture hexagon](..\..\Attachments\the-clean-architecture-hexagon.png)
 
 ## Application Business Rules vs Enterprise Business Rules
 
 In The Clean Architecture nomenclature, the core domain layer implements the so-called "enterprise business rules". As in DDD, it consists of entities, value objects, and domain services, which hold the domain knowledge and encode the associated logic that is central to the business.
 
-On the other hand, the so-called "application business rules" are more peripheral in that they specify how the application uses those core (enterprise) business rules in order to make it an application. _They provide a facade that exposes the domain model to external clients_, and define what this particular application can be used to do with the core domain model. That is, they define the use cases of the application.
+On the other hand, the so-called "application business rules" are more peripheral in that they specify how the application uses those core (enterprise) business rules in order to make it an application. *They provide a facade that exposes the domain model to external clients*, and define what this particular application can be used to do with the core domain model. That is, they define the use cases of the application.
 
 ## Application Services vs Domain Services
 

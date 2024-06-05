@@ -1,12 +1,12 @@
 ---
-title: "CQRS"
-date: "2023-11-27T09:43:35Z"
+title: CQRS
+date: 2023-11-27T09:43:35Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - software-architecture
-  - cqrs
-  - domain-driven-design
+- software-architecture
+- cqrs
+- domain-driven-design
 ---
 
 Typically we have a single domain model that serves both reads and writes.
@@ -21,7 +21,7 @@ Using the domain model for queries of this nature is inefficient and can warp th
 
 As such, CQRS (command query separation principle) suggests that we simply create a separate model for queries, and bypass the domain model on the read side altogether.
 
-This is acceptable because there are no side effects with queries, and as such no core business rules to enforce and so no _need_ for the domain model.
+This is acceptable because there are no side effects with queries, and as such no core business rules to enforce and so no *need* for the domain model.
 
 Because there's no domain model, there's also no obligation to use the same ORM as the command side. We're free to use a different ORM, a micro-ORM, raw SQL queries, or database views, and we can even make this decision per query.
 

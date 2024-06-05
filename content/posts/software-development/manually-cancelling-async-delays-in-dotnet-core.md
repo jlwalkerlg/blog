@@ -1,8 +1,8 @@
 ---
-title: "Manually Cancelling Async Delays in .NET Core"
-date: "2021-10-05T20:27:00Z"
+title: Manually Cancelling Async Delays in .NET Core
+date: 2021-10-05T20:27:00Z
 categories:
-  - Software Development
+- Software Development
 ---
 
 `Task.Delay(TimeSpan duration, CancellationToken cancellationToken)` allows you to asynchronously wait for a certain duration before continuing. Sometimes, however, we want to manually cancel the delay before the duration is up. For example, if we're using the outbox pattern for distributed messaging processing, we might poll the database with a delay between each read, but if we know a new message has been added to the database, we want to cancel the delay and process it immediately.
@@ -15,7 +15,7 @@ Note that the semaphore might be released more times than it is entered, and so 
 
 Full code to demonstrate is below.
 
-```csharp
+````csharp
 public class Program
 {
     private static readonly CancellableDelayer awaiter = new();
@@ -92,4 +92,4 @@ public class CancellableDelayer : IDisposable
         semaphore.Dispose();
     }
 }
-```
+````

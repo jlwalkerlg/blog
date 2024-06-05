@@ -1,11 +1,11 @@
 ---
-title: "Test Driven Development"
-date: "2024-02-12T18:48:04Z"
+title: Test Driven Development
+date: 2024-02-12T18:48:04Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - unit-testing
-  - tdd
+- unit-testing
+- tdd
 ---
 
 ## What's the point of automated testing?
@@ -18,16 +18,16 @@ It also gives developers more confidence in adding new features without breaking
 
 ## What's the point of TDD?
 
-The above points are true of automated testing whether the tests are written before _or after_ the product code.
+The above points are true of automated testing whether the tests are written before *or after* the product code.
 
 So, what's the benefit of writing the tests first?
 
-- It confirms that our tests are actually working because we see them first go red before going green. Never trust a test you haven't seen fail!
-- It helps us think about the acceptance criteria and how we actually want the feature to work rather than trying to figure it out as we go
-- It makes sure we don't write more code than is necessary to satisfy the acceptance criteria (and therefore the tests)
-- It forces us to actually write the tests (at all) and ensures that those tests cover all the edge cases. By testing last, we make it easy to forget about testing some of the edge cases we thought about while writing the production code
-- It ensures we write the production code with testability (and therefore modularity) in mind. By testing last, we could end up writing production code that is difficult to test
-- It provides a faster feedback cycle while developing
+* It confirms that our tests are actually working because we see them first go red before going green. Never trust a test you haven't seen fail!
+* It helps us think about the acceptance criteria and how we actually want the feature to work rather than trying to figure it out as we go
+* It makes sure we don't write more code than is necessary to satisfy the acceptance criteria (and therefore the tests)
+* It forces us to actually write the tests (at all) and ensures that those tests cover all the edge cases. By testing last, we make it easy to forget about testing some of the edge cases we thought about while writing the production code
+* It ensures we write the production code with testability (and therefore modularity) in mind. By testing last, we could end up writing production code that is difficult to test
+* It provides a faster feedback cycle while developing
 
 ## The TDD process
 
@@ -53,7 +53,7 @@ Anything else limits our ability to refactor by coupling the tests to the implem
 
 For example, if we decide to test input validation by writing tests directly against some validator class, we're locking ourselves in to using that validator class such that we can't later choose to refactor our code and do validation a different way. Futher, we're not even ensuring that the validator class is actually being used -- it might not even be wired up properly in the dependency injection container.
 
-Instead, we should test input validation by hitting the external API, where the input is actually provided. This way, we can change how input validation works as much as we want, and our tests will still work, because this way they don't care about _how_ it works, only that it does.
+Instead, we should test input validation by hitting the external API, where the input is actually provided. This way, we can change how input validation works as much as we want, and our tests will still work, because this way they don't care about *how* it works, only that it does.
 
 We should only drop down to testing the inner workings of our applications in order to help us develop some complicated logic or module (if necessary). Even then, such tests can (and maybe should) be deleted afterwards so that they don't block our ability to refactor later.
 
@@ -71,7 +71,7 @@ However, this makes integration tests slower than unit tests, and so developers 
 
 Therefore, integration tests alone aren't ideal for TDD, or to cover all the edge cases of complex business logic.
 
-Instead, we need to find the right balance between unit tests that run fast but provide less confidence in the system as a whole and integration tests that run slow but provide _more_ confidence in the system as a whole.
+Instead, we need to find the right balance between unit tests that run fast but provide less confidence in the system as a whole and integration tests that run slow but provide *more* confidence in the system as a whole.
 
 The right balance depends on the specifics of each project and how complex the business logic is.
 
@@ -105,11 +105,11 @@ In both integration tests and unit tests, we should always mock out volatile dep
 
 In unit tests, we should also mock any dependency that we do own but can't isolate per test, like a database or a file system.
 
-However, in integration tests, we shouldn't mock out these dependencies because the whole point in integration tests is to include such components. Instead, we should just run our integration tests one-by-one and make sure to reset any external dependencies to a clean state _before_ each test (not after, since the tear down could fail to run or might not even be called).
+However, in integration tests, we shouldn't mock out these dependencies because the whole point in integration tests is to include such components. Instead, we should just run our integration tests one-by-one and make sure to reset any external dependencies to a clean state *before* each test (not after, since the tear down could fail to run or might not even be called).
 
 In any case, any test doubles that we introduce should be pushed as far as possible to the edges of our system, so that we test as much of our own logic as possible. This requires that we write our own gateways through which we interact with external dependencies, such that we can easily mock them out.
 
-We should never mock code that we own because by doing so we couple our tests to the implementation details of our system (white box testing) rather than its external API (black box testing), and therefore limit our ability to refactor its internals. Remember that code can be written in many different ways, and tests should allow for that without breaking. Hence, they should not enforce _how_ the code works, only the observable outcomes.
+We should never mock code that we own because by doing so we couple our tests to the implementation details of our system (white box testing) rather than its external API (black box testing), and therefore limit our ability to refactor its internals. Remember that code can be written in many different ways, and tests should allow for that without breaking. Hence, they should not enforce *how* the code works, only the observable outcomes.
 
 ## Mocks vs spies/stubs
 
@@ -145,7 +145,7 @@ The behaviour under test must therefore be narrow enough in scope such that it c
 
 A good convention is to start each test method with the word "should". For example:
 
-```csharp
+````csharp
 public class CustomerLookupTest : TestCase
 {
   ShouldFindCustomerById()
@@ -159,16 +159,16 @@ public class CustomerLookupTest : TestCase
   }
   ...
 }
-```
+````
 
 [agiledox](http://agiledox.sourceforge.net/) would then print out something like this:
 
-```text
+````text
 CustomerLookup
 - should find customer by id
 - should fail for duplicate customers
 - ...
-```
+````
 
 ## What to assert
 
@@ -194,24 +194,24 @@ Likewise, don't make a project's internals visible to the test suite -- just tes
 
 Testing anti-patterns:
 
-- [Extending the API for testing](#extending-the-api-for-testing)
-- Duplicating the sut's implementation into tests
-- Code pollution (e.g., adding code to the production code solely for testing purposes, or adding boolean flags like `isTestEnvironment` -- instead, use dependency inversion and swap the implementations at run time in the tests)
-- Non-deterministic tests (e.g., using the system clock directly)
+* [Extending the API for testing](#extending-the-api-for-testing)
+* Duplicating the sut's implementation into tests
+* Code pollution (e.g., adding code to the production code solely for testing purposes, or adding boolean flags like `isTestEnvironment` -- instead, use dependency inversion and swap the implementations at run time in the tests)
+* Non-deterministic tests (e.g., using the system clock directly)
 
 ## Summary
 
-- Test through the external API as much as possible
-- Write at least one integration per feature to cover the most complex/important happy path, and write unit tests to cover all other scenarios and edge cases
-- Use descriptive names for your test methods that describe the specific behaviour being tested, and use those names to help you decide what to assert
-- Refactor your tests to keep them clean, and only include the details that are relevant to the particular behaviour that's under test
-- Prefer custom-written stubs and spies over mocking libraries, and only use test doubles at the edges of your system
-- Delete irrelevant tests
+* Test through the external API as much as possible
+* Write at least one integration per feature to cover the most complex/important happy path, and write unit tests to cover all other scenarios and edge cases
+* Use descriptive names for your test methods that describe the specific behaviour being tested, and use those names to help you decide what to assert
+* Refactor your tests to keep them clean, and only include the details that are relevant to the particular behaviour that's under test
+* Prefer custom-written stubs and spies over mocking libraries, and only use test doubles at the edges of your system
+* Delete irrelevant tests
 
 ## Resources
 
-- [Martin Thwaites talk on TDD](https://youtu.be/prLRI3VEVq4?si=bf_EAYLlb1wc75e9)
-- [Vladimir Khorikov course on Pluralsight](https://www.pluralsight.com/courses/pragmatic-unit-testing)
-- [Kent Beck post on Canon TDD](https://tidyfirst.substack.com/p/canon-tdd)
-- [Dan North post on BDD](https://dannorth.net/introducing-bdd/)
-- [Andrzej Nowik post on unit testing](https://www.linkedin.com/pulse/unit-tests-from-waste-asset-andrzej-nowik/)
+* [Martin Thwaites talk on TDD](https://youtu.be/prLRI3VEVq4?si=bf_EAYLlb1wc75e9)
+* [Vladimir Khorikov course on Pluralsight](https://www.pluralsight.com/courses/pragmatic-unit-testing)
+* [Kent Beck post on Canon TDD](https://tidyfirst.substack.com/p/canon-tdd)
+* [Dan North post on BDD](https://dannorth.net/introducing-bdd/)
+* [Andrzej Nowik post on unit testing](https://www.linkedin.com/pulse/unit-tests-from-waste-asset-andrzej-nowik/)

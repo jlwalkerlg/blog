@@ -1,13 +1,13 @@
 ---
-title: "Why use domain services?"
-date: "2024-05-31T12:27:29+01:00"
+title: Why use domain services?
+date: 2024-05-31T12:27:29+01:00
 categories:
-  - Software Development
+- Software Development
 tags:
-  - domain-driven-design
+- domain-driven-design
 ---
 
-_TLDR: use domain services to enforce business rules that span across multiple aggregates._
+*TLDR: use domain services to enforce business rules that span across multiple aggregates.*
 
 In DDD, aggregates are self-contained consistency boundaries that enforce the business rules related only to themselves.
 
@@ -19,7 +19,7 @@ Domain services live in the domain layer and are typically implemented as classe
 
 For example, an `IssueManager` domain service might use an `IIssueRepository` to check how many issues are currently assigned to a user before assigning another. If too many are assigned, the domain service might throw an exception to enforce the business rule.
 
-```csharp
+````csharp
 public class IssueManager
 {
   private readonly IIssueRepository _issueRepository;
@@ -41,4 +41,4 @@ public class IssueManager
     issue.AssignedUserId = user.Id;
   }
 }
-```
+````

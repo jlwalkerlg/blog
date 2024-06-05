@@ -1,12 +1,12 @@
 ---
-title: "Brain Dump: DDD and Clean Architecture"
-date: "2023-11-11T14:02:00Z"
+title: 'Brain Dump: DDD and Clean Architecture'
+date: 2023-11-11T14:02:00Z
 categories:
-  - Software Development
+- Software Development
 tags:
-  - domain-driven-design
-  - software-architecture
-  - the-clean-architecture
+- domain-driven-design
+- software-architecture
+- the-clean-architecture
 ShowToc: true
 ---
 
@@ -14,41 +14,41 @@ ShowToc: true
 
 Some domain operations might only need an entity's ID, like so.
 
-```csharp
+````csharp
 user.AcceptInvitation(invitation.Id);
-```
+````
 
 However, this marginally leaks implementation details and doesn't express the domain language as strongly as the following.
 
-```csharp
+````csharp
 user.AcceptInvitation(invitation);
-```
+````
 
 # Use sychronous add/remove methods on the unit of work
 
-The point of the unit of work pattern is to track all changes to the domain model _in memory_, and commit them all in a single database transaction.
+The point of the unit of work pattern is to track all changes to the domain model *in memory*, and commit them all in a single database transaction.
 
 Since change tracking happens in memory, there's no need for add/remove operations to be asynchronous.
 
 As such, they should be synchronous, like so.
 
-```csharp
+````csharp
 public interface IUnitOfWork
 {
     void Add(IAggregateRoot entity);
     void Remove(IAggregateRoot entity);
 }
-```
+````
 
 Only the read operations need to be asynchronous, since these will most likely load domain entities from the database.
 
-## Put all classes related to a use case in the same static class [optional]
+## Put all classes related to a use case in the same static class \[optional\]
 
 When organising application use-cases by feature, instead of separating the command, handler, validator, and response model into separate files, it's sometimes nice to keep them in the same file.
 
 To do this neatly, we can use a static class, like so.
 
-```csharp
+````csharp
 public static class CreateUser
 {
     public record Command(string Name) : IRequest;
@@ -70,11 +70,11 @@ public static class CreateUser
         }
     }
 }
-```
+````
 
 ## Folder structure: domain layer
 
-```
+````
   Menus/
   ├─Entities/
   │ └─MenuItem.cs
@@ -83,7 +83,7 @@ public static class CreateUser
   │ └─MenuItemId.cs
   ├─IMenuRepository.cs
   └─Menu.cs
-```
+````
 
 ## Design the domain model before the database model
 
