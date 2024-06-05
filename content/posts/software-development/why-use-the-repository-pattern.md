@@ -10,7 +10,8 @@ summary: The repository pattern is a design pattern whereby all database operati
 ---
 
 
- > 
+ >
+ > \[!info\]
  > The repositories described here are not part of the domain model. They live in the application layer and are used to persist and load the domain model to and from the database.
 
 The repository pattern is a design pattern whereby all database operations within the application layer are abstracted behind interfaces, rather than working with the data access layer or ORM directly. Typically, you'll have a repository per entity or aggregate root (if following DDD). For example, if you have an `Order` aggregate, you'll typically have an `IOrderRepository` with methods like `GetOrderById` and `AddOrder`.
