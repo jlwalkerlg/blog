@@ -11,7 +11,7 @@ MediatR is an out of the box command dispatcher library that's often used to sep
 
 You might choose to use MediatR because
 
-* it encourages you to [decouple your core application logic from the delivery mechanism](what-is-the-application-layer.md) (e.g., your web controllers).
+* it encourages you to [decouple your core application logic from the delivery mechanism](What%20is%20the%20application%20layer.md) (e.g., your web controllers).
 * it encourages you to represent all the requests and responses in your application as explicit data types (e.g., classes), making your app's functionality more visible and explicit
 * it encourages you to have one handler per request, rather than different service classes each handling multiple use cases — the single responsibility pattern
 * it allows you to use the chain of responsibility pattern via pipeline behaviours (middleware) for cross-cutting concerns.

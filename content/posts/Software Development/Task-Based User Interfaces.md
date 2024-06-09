@@ -8,7 +8,7 @@ tags:
 - domain-driven-design
 ---
 
-Task-based user interfaces are essential for domain-driven design and [CQRS](cqrs.md). Instead of presenting an interface consisting of data-oriented forms that allow the user to directly manipulate the data underlying the domain model in a nearly one-to-one correspondence with the database, as is typical with CRUD-based systems, task-based interfaces instead break each operation on the domain model down into separate tasks, and as such present a more behaviour-oriented, understandable interface to users.
+Task-based user interfaces are essential for domain-driven design and [CQRS](CQRS.md). Instead of presenting an interface consisting of data-oriented forms that allow the user to directly manipulate the data underlying the domain model in a nearly one-to-one correspondence with the database, as is typical with CRUD-based systems, task-based interfaces instead break each operation on the domain model down into separate tasks, and as such present a more behaviour-oriented, understandable interface to users.
 
 ## CRUD-based Interfaces
 

@@ -12,7 +12,7 @@ tags:
 
 *Source code available on GitHub at https://github.com/jlwalkerlg/laravel-outbox-pattern-demo*
 
-Laravel's event system makes it simple to implement [the outbox pattern](the-outbox-pattern.md) and deal with failures in processing side effects.
+Laravel's event system makes it simple to implement [the outbox pattern](The%20Outbox%20Pattern.md) and deal with failures in processing side effects.
 
 A common scenario when registering a new user in a web application is sending them a confirmation or a welcome message via email.
 

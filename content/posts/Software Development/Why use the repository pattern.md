@@ -10,7 +10,7 @@ summary: The repository pattern is a design pattern whereby all database operati
 ---
 
 
- >
+ > 
  > \[!info\]
  > The repositories described here are not part of the domain model. They live in the application layer and are used to persist and load the domain model to and from the database.
 
@@ -21,7 +21,7 @@ You might choose to use the repository pattern in order to
 * enforce the design constraint that aggregates should be loaded and persisted in full. If developers are allowed to load and persist entities without having to go through the corresponding aggregate roots, they can easily ignore the business rules and therefore break the domain invariants. With the repository pattern, your repositories can be designed such that they necessarily load and persist aggregates in full.
 * decouple your application code from the ORM, such that you can swap it out for another ORM or data access implementation in the future. This may or may not be an issue depending on the maturity, reliability, and stability of your ORM, and the likelihood of you swapping it out for something else.
 * decouple your application code from the ORM, such that you can swap it out for in-memory test doubles in unit tests. If your ORM supports an in-memory implementation suitable for unit tests, this may not be an issue.
-* keep your application logic clean by separating it from the ORM logic. This may or may not be an issue depending on how clean it is to work with your particular ORM.
+* keep your application logic cleaner and more readable by applying separation of concerns and isolating it from the ORM. This may or may not be an issue depending on how clean it is to work with your particular ORM.
 
 You might choose not to use the repository pattern
 

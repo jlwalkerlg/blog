@@ -14,5 +14,5 @@ Another option is to use GUIDs (or UUIDs) as entity IDs, which can be generated 
 You might choose to do this so that
 
 * you don't have nullable ID properties in your domain model, which then require null checks whenever you access the entity's ID.
-* you can use the ID *before* the entity is saved to the database, for example to pass it to another entity as an identity reference (foreign key), or to implement [the outbox pattern](the-outbox-pattern.md).
+* you can use the ID *before* the entity is saved to the database, for example to pass it to another entity as an identity reference (foreign key), or to implement [the outbox pattern](The%20Outbox%20Pattern.md).
 * you don't need a database at all -- you can use some other storage mechanism to persist the domain model, and for unit tests you can even run your code completely in memory.

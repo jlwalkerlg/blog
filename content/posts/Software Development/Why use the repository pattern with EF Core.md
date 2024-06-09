@@ -9,7 +9,7 @@ tags:
 
 It's often argued that since EF Core is itself already an implementation of the repository pattern (and the unit of work pattern) and supports multiple databases, including an in-memory database suitable for testing, that abstracting away EF Core from your application is redundant and unnecessary.
 
-Let's analyse the [reasons to use the repository pattern](why-use-the-repository-pattern.md) one by one, and evaluate them in the context of using EF Core.
+Let's analyse the [reasons to use the repository pattern](Why%20use%20the%20repository%20pattern.md) one by one, and evaluate them in the context of using EF Core.
 
 * Enforcing the design constraint that aggregates should be loaded and persisted in full. This is a valid reason to use the repository pattern, even with EF Core, because without any abstraction, developers have full control over the `DbContext`, which means they can query and persist any domain entities whether they're aggregate roots or not, and can choose not to use `Include` to load aggregates in full.
 * Swapping out the ORM for another data access implementation in the future. For most projects, this is highly unlikely, given the ubiquitousness, level of support, and level of active development surrounding EF Core, as well as the number of databases it supports natively.

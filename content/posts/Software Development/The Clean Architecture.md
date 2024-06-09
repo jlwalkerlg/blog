@@ -40,7 +40,7 @@ Besides decoupling and modularity, another advantage of defining the application
 
 Notice that this layer does handle user input/output, but it is not tied to a particular delivery mechanism, like the web. That is, it doesn't read input from a HTTP request, or return an HTML view or a JSON response. Instead, its inputs and outputs are simple, normalised data structures that can be sent and received from any delivery mechanism, whether the client be a web browser, a console application, a desktop application, or most importantly, a test suite!
 
-To see how this layer and its use case `Interactor` objects compare with DDD application services, the ports of Hexagonal Architecture, and domain services, [refer to this blog post](the-application-layer.md).
+To see how this layer and its use case `Interactor` objects compare with DDD application services, the ports of Hexagonal Architecture, and domain services, [refer to this blog post](The%20Application%20Layer.md).
 
 ## Interface Adapters
 
@@ -85,7 +85,7 @@ public class TodoController : ControllerBase
 
 Note that the controller *could* format the response itself, and the dependency rule would not have been violated. However, by passing it to the presenter, it obeys the single responsibility principle, and so keeps the code more modular. Alternatively, the `Interactor` could pass the response to the `Presenter` itself, and the `Controller` could in turn ask the `Presenter` for the result before returning it, for the same result.
 
-After the `Controller` has passed control to the `Interactor` in the application layer, the `Interactor` loads the appropriate domain entity from the appropriate repository, saves the changes, and returns a simple `Result` object. This object is meant simply as a acknowledgement of whether or not the request was successful, and may contain an error in the case of a failure. In this case then, only metadata about the status of the request is returned, since this particular application follows [CQRS](cqrs.md) principles, but it is equally acceptable to return data from the `Interactor`, so long as the data is a simple data structure and is not tied to a particular delivery mechanism.
+After the `Controller` has passed control to the `Interactor` in the application layer, the `Interactor` loads the appropriate domain entity from the appropriate repository, saves the changes, and returns a simple `Result` object. This object is meant simply as a acknowledgement of whether or not the request was successful, and may contain an error in the case of a failure. In this case then, only metadata about the status of the request is returned, since this particular application follows [CQRS](CQRS.md) principles, but it is equally acceptable to return data from the `Interactor`, so long as the data is a simple data structure and is not tied to a particular delivery mechanism.
 
 ````csharp
 public class CompleteTodoCommand
