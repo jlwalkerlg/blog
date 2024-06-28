@@ -92,6 +92,8 @@ Domain services are stateless services that contain business logic. They are use
 
 ## How to model the domain correctly
 
-The key to properly modelling the domain within the code is to understand the domain itself as deeply as possible, and to let the ubiquitous language guide the actual coding constructs (classes, interfaces, etc) and the behaviours that you capture in the software.
+The key to properly modelling the domain within the code is to understand the domain itself as deeply as possible, and to let the ubiquitous language guide the actual coding constructs (classes, interfaces, etc) and behaviours that you capture in the software.
 
-You should also think first about the *behaviours* within the domain and how the different concepts interact with each other at a high level, *before* thinking at a lower level about the data that you'll need to capture to implement each concept.
+You should also think first about the *behaviours* within the domain model rather than thinking immediately about the data; think about business capabilities and how the domain concepts interact with each other at a high level, and only then think at a lower level about the data that you'll need to capture in order to facilitate those behaviours.
+
+Additionally, you should consider the UI and its actual use cases when modelling the domain; you don't want to model every operation in the business, but only those processes that the application is actually being built for. Bear in mind that the domain model is a means to an end, where the end goal is a useful and functional application, rather than the domain model itself.
