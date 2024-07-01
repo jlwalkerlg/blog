@@ -13,7 +13,7 @@ Intrinsic complexity is inherent in the problem we are solving. That is, it's in
 
 Accidental complexity is the technical complexity that we as developers add on top of the intrinsic complexity in our software implementation.
 
-DDD is an attempt at reducing accidental complexity within intrinsically complex domains by more closely aligning the software with the business model, concepts, and language. It is a software design philosophy the emphasises understanding the business domain itself before distilling those concepts into a concise model, and then encoding that model into software using OOP.
+DDD is suitable for projects with high business complexity (as opposed to only technical complexity); it is an attempt at reducing accidental complexity within intrinsically complex domains by more closely aligning the software with the business model, concepts, and language. It is a software design philosophy that emphasises understanding the business domain itself before distilling those concepts into a concise model, and then encoding that model into software using OOP.
 
 As such, the key to the success of DDD is to properly and deeply understand the business domain first, and then to accurately model its concepts within the software. This requires close collaboration between developers and domain experts.
 
@@ -43,11 +43,15 @@ Ideally, each bounded context aligns perfectly with the subdomains of the busine
 
 However, if the business reorganises itself into different subdomains, any existing bounded contexts built around the previous subdomains will become out of sync. That is, bounded contexts are not the subdomains themselves -- they are the implementations of the subdomains as distinct software artifacts.
 
+In practice, bounded contexts can be implemented in a number of ways, as long as it's easy for a develop to know which context they're in. For example, they might be defined as different folders, projects, repositories, or database schema.
+
 Since each bounded context uses the ubiquitous language of its corresponding subdomain, the domain concepts and the domain model within that bounded context only make sense inside it, and are not shared with other bounded contexts.
 
-As such, each bounded context defines its own model and owns its own data (i.e., it has its own database or database schema).
+As such, each bounded context defines its own model and owns its own data (i.e., it has its own database or database schema). If a bounded context needs data from another bounded context for some operation, it shouldn’t reach out to the other context on the fly; instead, it should keep its own copy of any data that it needs. In other words, while each piece of data in the system is owned primarily by one particular bounded context, any other bounded contexts that need access to that data should keep a cached version of it.
 
-In practice, bounded contexts can be implemented in a number of ways, as long as it's easy for a develop to know which context they're in. For example, they might be defined as different folders, projects, repositories, or database schema.
+This means that the cached data in some bounded contexts will at some point be momentarily stale, before it’s refreshed. This can seem like a problem, but it’s important to recognise that the end user is always working with potentially stale data anyway — the data they see on screen is a cached copy of the data in the database, which might have already changed since the page was loaded. If a product price changes before the customer completes their purchase but after they’ve landed on the checkout screen, then they’ll be looking at stale data and might be unexpectedly charged with the new price.
+
+For example, customer information such as name and address will likely be owned a customer management bounded context, because it’s here where the data will be modified. However, shipping might need access to this data too. As such, it should keep its own copy of each customer’s address, rather than calling into the customer management context each time it needs it.
 
 Asynchronous communication is preferred to synchronise data between different bounded contexts. This implies eventual consistency, which both the business and the end user must fully embrace.
 
@@ -97,3 +101,9 @@ The key to properly modelling the domain within the code is to understand the do
 You should also think first about the *behaviours* within the domain model rather than thinking immediately about the data; think about business capabilities and how the domain concepts interact with each other at a high level, and only then think at a lower level about the data that you'll need to capture in order to facilitate those behaviours.
 
 Additionally, you should consider the UI and its actual use cases when modelling the domain; you don't want to model every operation in the business, but only those processes that the application is actually being built for. Bear in mind that the domain model is a means to an end, where the end goal is a useful and functional application, rather than the domain model itself.
+
+## Resources
+
+* https://youtu.be/W2OobtTQo9Y?si=GJ_2rEKUi_O3otFs
+* https://youtu.be/\_zWMjMUHinc?si=O7X11u1hJsnfPv5O
+* https://youtu.be/pMuiVlnGqjk?si=wS8wLDJ1gANpj-wc

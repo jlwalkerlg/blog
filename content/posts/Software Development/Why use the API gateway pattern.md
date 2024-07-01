@@ -7,7 +7,7 @@ tags:
 - software-architecture
 ---
 
-When a frontend app needs data from many different (micro-) services
+When a frontend app needs data from many different microservices
 
 * it can become bloated because it needs to do data aggregation, error handling, and service location across many different service
 * it can harm performance because it often needs to send many different requests per screen
@@ -16,7 +16,7 @@ When a frontend app needs data from many different (micro-) services
 
 With the API gateway pattern, the frontend calls a single API which takes care of locating and calling all the necessary microservices, then aggregating the data into a response format suitable for the frontend.
 
-The API gateway can also take some responsibilities away from the individual microservices too, such as
+The API gateway can also take some responsibilities away from the backend microservices, such as
 
 * authentication and authorisation
 * SSL termination
