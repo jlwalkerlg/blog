@@ -23,4 +23,4 @@ When the release branch is ready to go to production, it's merged into the maste
 
 If a bug is found in production, a hotfix branch is created by branching directly off of the master branch, applying the fix, merging it back into master, tagging it with an updated version number, and deploying. In the meantime, the CI/CD pipeline should be able to rollback to the previous production release, while the hotfix is being applied (if necessary).
 
-![Pasted image 20240702180842.png](..\..\Pasted%20image%2020240702180842.png)
+![Pasted image 20240702181929.png](..\..\Pasted%20image%2020240702181929.png)
