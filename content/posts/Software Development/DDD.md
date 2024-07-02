@@ -19,6 +19,8 @@ As such, the key to the success of DDD is to properly and deeply understand the 
 
 The domain model is selective about which business concepts it encapsulates, and shouldn't include every single concept of the business -- only the concepts that are relevant to the particular business problems that the software is designed to solve.
 
+Techniques like event storming, domain storytelling, and event modelling can help to model the domain with the help of domain experts.
+
 ## Building blocks
 
 ### Ubiquitous language
