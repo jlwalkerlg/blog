@@ -1,5 +1,5 @@
 ---
-title: CQRS
+title: Why use CQRS?
 date: 2024-06-24T14:43:00+01:00
 categories:
 - Software Development
